@@ -1,0 +1,100 @@
+.card-background-page {
+position: fixed;
+height: 100%;
+
+  .divPopUpInicialSlide{
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.205);
+    width: 100%;
+    height: 102%;
+    left: -2.5%;
+    top: -2%;
+    z-index: 10;
+  }
+
+  .slidePopUpInicial{
+    position: relative;
+    height: 80%;
+    width: 90%;
+    top: 10%;
+    background-color: transparent;
+  }
+
+  .slidePopUpInicialItem{
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+  }
+
+.btFecharPopUp{
+  position:inherit;
+  top: 200%;
+  left: 38%;
+  background-color: transparent;
+  color: #3880ff;
+}
+
+
+
+
+
+  .slideInformativo{
+    position: relative;
+    height: 15%;
+    top: -8%;
+  }
+
+  .cardInformativo{
+    position: relative;
+    top: 0%;
+    width: 80%;
+    height: 80%;
+  }
+
+  .logoInicial{
+    position: relative;
+    top: 0%;
+    left: 10%;
+    width: 80%;
+    height: 50%;
+  }
+
+
+  .txDicaInfoAlert{
+    position: relative;
+    top: -18%;
+    font-size: 80%;
+  }
+
+  .divSearchBar{
+    position: fixed;
+    top: 91.5%;
+    height: 90%;
+    width: 95%;
+    left: 0%;
+    z-index: 1;
+    border-radius: 2%;
+  }
+
+  .searchBarInicial{
+    position:static;
+    width: 100%;
+    left: 0%;
+    top: -40%;
+    z-index: 2;
+    border-color: transparent;
+  }
+
+  ion-list-header{
+    background-color: #d7d8da;
+  }
+  ion-item{
+    background-color: #d7d8da;
+  }
+  ion-list{
+    background-color: #d7d8da;
+  }
+
+
+
+}
