@@ -15,7 +15,8 @@ import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getFirestore, collection, getDocs } from 'firebase/firestore/lite';
 
-
+//Graficos
+import { Chart } from 'chart.js';
 
 const firebaseConfig = {
   apiKey: "AIzaSyBdP5R92n_M3OdyukinRkd9Wwomx5_gHNc",

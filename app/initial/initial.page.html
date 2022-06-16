@@ -9,7 +9,7 @@
           <h4>Seja bem vindo(a) ao <b>Controle de Estoque</b>!</h4>  
         </ion-card-header>
         <ion-card-content>
-          <img src="../../assets/LogoInicial.png" class="imgSlidesInitial"/>
+          <img src="../../assets/firstImage.png" class="imgSlidesInitial"/>
         </ion-card-content>
         <h2 ion-button color="secondary" class="btTelaLoginCadastro" (click)="avancarSlider()" clear>Próximo</h2>
       </ion-card>
@@ -18,12 +18,10 @@
       <ion-card class="cardUm">
         <ion-card-header>
           <h1 class="txTituloSlideDois">Atenção!</h1>
+          <img class="imgSlideInicialDois" src="../../assets/secondImage.png"/>
         </ion-card-header>
         <ion-card-content class="txSlideDois">
           <p>Nosso aplicativo encontra-se em desenvolvimento, sendo assim, é normal que ocorra alguns bugs, mas estaremos correndo para arruma-los e entregar a melhor versão do aplicativo para você!</p>
-          <p><br>Caso tenha dúvidas ou precise reportar algum bug, entre em contato conosco através dos seguintes meios:</p>
-          <p><br><b>WhatsApp:</b> (11) 98309-3902</p>
-          <p><b>E-mail:</b> Lucas.nds@hotmail.com</p>
           <p><br><b>Obrigado!</b></p>
         </ion-card-content>
         <h2 ion-button color="secondary" class="btTelaLoginCadastro" (click)="continuaTelaLoginCadastro()" clear>Continuar</h2>
@@ -34,9 +32,37 @@
 </ion-content>
 
 
-<ion-content class="cardLogin" id="cardLogin">
-  <ion-input  name="email" [(ngModel)]="email" class="nome" type="text" ></ion-input>```
-  <ion-input  name="password" [(ngModel)]="password" class="nome" type="password" ></ion-input>```
-  <button ion-button color="secondary" (click)="createUser()" clear>cadastrar</button>
+<div class="cardLogin" id="cardLogin">
+  <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" />
 
-</ion-content>
+  <div class="subCardLogin" id="subCardLogin">
+    <div class="divImgLogoInicial">
+      <img src="../../assets/imageLogin.png" class="divImgLogoInicial"/>
+    </div>
+    
+    <p class="txCardEmail"><b>E-email/ Cpf</b></p>
+    <ion-input type="text" class="tbCardEmail" placeholder="nome@dominio.com"></ion-input>
+    <p class="txCardSenha"><b>Senha</b></p>
+    <ion-input type="password" class="tbCardSenha" placeholder="********"></ion-input>
+
+    <ion-button shape="round" class="btEntrar" (click)="loginUser()">Entrar</ion-button>
+    <div class="divSeparatorButtonsLogin"></div>
+    <ion-button shape="round" class="btCadastrar" color="success" (click)="createUser()">Cadastrar</ion-button>
+
+    <div class="divSeparadorLogin"></div>
+    <p class="txOu">ou</p>
+    <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
+    <div class="google-btn" (click)="loginWithGoogle()">
+      <div class="google-icon-wrapper">
+        <img class="google-icon" src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"/>
+      </div>
+      <p class="btn-text">Entrar com Google</p>
+    </div>
+
+    <div class="facebook-btn" (click)="loginWithFacebook()">
+      <div class="facebook-icon-wrapper">
+        <img class="facebook-icon" src="../../assets/logoFacebook.png"/>
+      </div>
+      <p class="btn-text-facebook">Entrar com Facebook</p>
+    </div>  </div>
+</div>

@@ -5,42 +5,22 @@
   <ion-header collapse="condense">
   </ion-header>
 
+  <ion-content [fullscreen]="true">
+    <div class="ion-padding">
+     <ion-card>
+       <ion-card-header>
+         Line Chart
+       </ion-card-header>
+       <ion-card-content>
+         <canvas #lineCanvas style="position: relative; height:20vh; width:40vw"></canvas>
+       </ion-card-content>
+     </ion-card>
+   </div>
+ </ion-content>
+
+
+<!-- 
   <ion-content class="card-background-page">
-
-    <ion-card class="divPopUpInicialSlide" id="divPopUpInicialSlide">
-      <ion-slides pager class="slidePopUpInicial">
-        <ion-slide>
-          <ion-card class="slidePopUpInicialItem">
-            <ion-card-header>
-              <h1>Olá, {{ nome_usuario }}!</h1>
-              <h4>Seja bem vindo(a) ao <b>Controle de Estoque</b>!</h4>
-            </ion-card-header>
-            <ion-card-content>
-              É um enorme prazer ter você aqui conosco!!
-              <img src="../../assets/LogoInicial.png" class="logoPopUpInicial"/>
-            </ion-card-content>
-          </ion-card>
-        </ion-slide>
-        <ion-slide>
-          <ion-card class="slidePopUpInicialItem">
-            <ion-card-header>
-              <h1>Atenção!</h1>
-            </ion-card-header>
-            <ion-card-content>
-              <p>Nosso aplicativo encontra-se em desenvolvimento, sendo assim, é normal que ocorra alguns bugs, mas estaremos correndo para arruma-los e entregar a melhor versão do aplicativo para você!</p>
-              <p><br>Caso tenha dúvidas ou precise reportar algum bug, entre em contato conosco através dos seguintes meios:</p>
-              <p><br><b>WhatsApp:</b> (11) 98309-3902</p>
-              <p><b>E-mail:</b> Lucas.nds@hotmail.com</p>
-              <p><br><b>Obrigado!</b></p>
-              <button ion-button color="secondary" class="btFecharPopUp" (click)="fecharPopUp()" clear>Fechar</button>
-            </ion-card-content>
-          </ion-card>
-        </ion-slide>
-      </ion-slides>
-    </ion-card>
-
-
-
 
 
     <img src="../../assets/LogoInicial.png" class="logoInicial"/>
@@ -194,4 +174,4 @@
   
   </ion-content>
 
-</ion-content>
+</ion-content> -->

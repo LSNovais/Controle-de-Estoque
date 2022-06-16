@@ -39,7 +39,7 @@ h4{
 }
 
 b{
-    color: #5260ff;
+    color: #3880ff;
 }
 
 .imgSlidesInitial{
@@ -52,10 +52,16 @@ b{
     left: 31%;
 }
 
+.imgSlideInicialDois{
+    position: fixed;
+    top: 20%;
+    left: 0%;
+}
+
 .txSlideDois{
     position: fixed;
     text-align: justify;
-    top: 30%;
+    top: 60%;
     left: 10%;
     width: 80%;
 }
@@ -80,6 +86,167 @@ b{
     left: 0%;
     width: 100%;
     height: 100%;
+    background-image: url("../../assets/PlanoFundo.jpg");
+    filter: blur(0px);
+    z-index: 1;
+}
+.divImgLogoInicial{
+    position: fixed;
+    top: 5%;
+    left: 0%;
+    width: 100%;
+    border-radius: 50%;
+}
+.subCardLogin{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0%;
+    border-style: solid;
+    border-color: #3881ff38;
+    background-color: white;
+    // border-top-left-radius: 50px;
+    z-index: 2;
+}
+
+.txCardEmail{
+    position: fixed;
+    top: 40%;
+    left: 25%;
+    height: 5%;
+    width: 50%;
+    color: black;
+    font-size: 70%;
+}
+.tbCardEmail{
+    position: fixed;
+    top: 44%;
+    left: 25%;
+    height: 5%;
+    width: 70%;
+    color: black;
+    border-bottom: black;
+}
+.txCardSenha{
+    position: fixed;
+    top: 49%;
+    left: 25%;
+    height: 5%;
+    width: 50%;
+    color: black;
+    font-size: 70%;
+}
+.tbCardSenha{
+    position: fixed;
+    top: 53%;
+    left: 25%;
+    height: 5%;
+    width: 50%;
+    color: black;
+    border-bottom: black;
+}
+
+
+
+
+.btEntrar{
+    position: fixed;
+    top: 61%;
+    left: 21%;
+    width: 29.3%;    
+    z-index: 1;
+    --padding-start: 15%;
+}
+
+.divSeparatorButtonsLogin{
+    position: fixed;
+    top: 61%;
+    left: 47%;
+    height: 8%;
+    width: 4%;
+    background-color: white;
+    z-index: 2;
+}
+
+.btCadastrar{
+    position: fixed;
+    top: 61%;
+    left: 46%;
+    width: 35%;    
+    z-index: 0;
+    --color: white;
+    --padding-end: 10%;
+}
+
+.divSeparadorLogin{
+    position: fixed;
+    top: 73%;
+    left: 20%;
+    width: 62%;
+    height: 0.2%;
+    background-color: #d7d8da;
+}
+
+.txOu{
+    position: fixed;
+    top: 69.4%;
+    left: 45%;
+    width: 10%;
+    color: black;
+    background-color: white;
+    text-align: center;
+}
+
+
+
+
+
+@import url(https://fonts.googleapis.com/css?family=Roboto:500);
+
+
+$white: #fff;
+$google-blue: #4285f4;
+$button-active-blue: #1669F2;
+
+.google-btn {
+    position: fixed;
+  top: 78%;
+  left: 21%;
+  width: 60%;
+  height: 6.1%;
+  background-color: $google-blue;
+  border-radius: 2px;
+  box-shadow: 0 3px 4px 0 rgba(0,0,0,.25);
+  .google-icon-wrapper {
+    position: absolute;
+    margin-top: 1px;
+    margin-left: 1px;
+    width: 40px;
+    height: 40px;
+    border-radius: 2px;
+    background-color: $white;
+  }
+  .google-icon {
+    position: absolute;
+    margin-top: 11px;
+    margin-left: 11px;
+    width: 18px;
+    height: 18px;
+  }
+  .btn-text {
+    float: right;
+    margin: 6% 15%;
+    color: $white;
+    font-size: 14px;
+    letter-spacing: 0.2px;
+    font-family: "Roboto";
+  }
+  &:hover {
+    box-shadow: 0 0 6px $google-blue;
+  }
+  &:active {
+    background: $button-active-blue;
+  }
 }
 
 
@@ -87,3 +254,50 @@ b{
 
 
 
+
+
+
+
+
+
+
+.facebook-btn {
+    position: fixed;
+  top: 86%;
+  left: 21%;
+  width: 60%;
+  height: 6.1%;
+  background-color: $google-blue;
+  border-radius: 2px;
+  box-shadow: 0 3px 4px 0 rgba(0,0,0,.25);
+  .facebook-icon-wrapper {
+    position: absolute;
+    margin-top: 1px;
+    margin-left: 1px;
+    width: 40px;
+    height: 40px;
+    border-radius: 2px;
+    background-color: $white;
+  }
+  .facebook-icon {
+    position: absolute;
+    margin-top: 11px;
+    margin-left: 11px;
+    width: 18px;
+    height: 18px;
+  }
+  .btn-text-facebook {
+    float: right;
+    margin: 6% 10%;
+    color: $white;
+    font-size: 14px;
+    letter-spacing: 0.2px;
+    font-family: "Roboto";
+  }
+  &:hover {
+    box-shadow: 0 0 6px $google-blue;
+  }
+  &:active {
+    background: $button-active-blue;
+  }
+}
