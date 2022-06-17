@@ -8,8 +8,6 @@ import Chart from 'chart.js/auto';
 import ChartType from 'chart.js/auto';
 
 
-
-
 const data = {
   labels: [
     'Red',
@@ -28,10 +26,10 @@ const data = {
   }]
 };
 
-const doughnut:ChartType = "doughnut";
+// const doughnut:ChartType = "doughnut";
 
 const config = {
-  type:doughnut,
+  // type:doughnut,
   data:data,
 };
 
@@ -49,11 +47,11 @@ export class Tab1Page implements AfterViewInit{
   constructor() {}
 
   ngAfterViewInit() {
-    this.lineChartMethod();
+    // this.lineChartMethod();
   }
   
 
-  lineChartMethod() {
-    this.barChart = new Chart(this.barCanvas.nativeElement, config);
-  }
+  // lineChartMethod() {
+  //   this.barChart = new Chart(this.barCanvas.nativeElement, config);
+  // }
 }
