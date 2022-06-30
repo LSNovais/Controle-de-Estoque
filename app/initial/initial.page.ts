@@ -74,8 +74,8 @@ const password:string = null;
 })
 export class InitialPage {
   @ViewChild('slideInicial1')  slide1: IonSlides;
-  public email:string;
-  public password:string;
+  public emailLogin:string;
+  public senhaLogin:string;
 
 
   constructor(public navCtrl: NavController) {
@@ -110,39 +110,83 @@ export class InitialPage {
 
     slider.style.setProperty('visibility', 'hidden');
     telaInicial.style.setProperty('visibility', 'visible');
-
   }
 
+  emailInvalido(invalido: boolean){
+    const tbEmail = document.getElementById("tbCardEmail");
+    const txEmailInvalido = document.getElementById("txCardEmailInvalido");
+
+    if(invalido){
+      tbEmail.style.borderColor = "red";
+      txEmailInvalido.style.setProperty('visibility', 'visible');  
+    }else{
+      tbEmail.style.borderColor = "transparent";
+      txEmailInvalido.style.setProperty('visibility', 'hidden');  
+    }
+  }
+
+  senhaInvalido(invalido: boolean){
+    const tbSenha = document.getElementById("tbCardSenha");
+    const txSenhaInvalido = document.getElementById("txCardSenhaInvalida");
+
+    if(invalido){
+      tbSenha.style.borderColor = "red";
+      txSenhaInvalido.style.setProperty('visibility', 'visible');
+    }else{
+      tbSenha.style.borderColor = "transparent";
+      txSenhaInvalido.style.setProperty('visibility', 'hidden');
+    }
+  }
+  delay(ms: number) {
+    return new Promise( resolve => setTimeout(resolve, ms) );
+  }
   avancarSlider(){
     this.slide1.slideNext();
   }
 
   createUser(){
-    const auth = getAuth();
-    createUserWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      const user = userCredential.user;
-      alert("Usuario criado! " + user);
-    })
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      alert("Falha ao criar usuário! " + errorMessage + " Cod. Error: " + errorCode);
-    });
+    const cardCadastro = document.getElementById("cardCadastro");
+    cardCadastro.style.setProperty('visibility', 'visible');
+
+
+    // const auth = getAuth();
+    // createUserWithEmailAndPassword(auth, email, password)
+    // .then((userCredential) => {
+    //   const user = userCredential.user;
+    //   alert("Usuario criado! " + user);
+    // })
+    // .catch((error) => {
+    //   const errorCode = error.code;
+    //   const errorMessage = error.message;
+    //   alert("Falha ao criar usuário! " + errorMessage + " Cod. Error: " + errorCode);
+    // });
   }
 
   loginUser(){
-    const auth = getAuth();
-    signInWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      const user = userCredential.user;
-      alert("Bem vindo! " + user);
-    })
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      alert("Falha ao realizar login! " + errorMessage + " Cod. Error: " + errorCode);
-    });
+    if(this.emailLogin == null){
+      this.emailInvalido(true);
+    }else if(this.senhaLogin == null){
+      this.emailInvalido(false);
+      this.senhaInvalido(true);
+    }else{
+      const auth = getAuth();
+      signInWithEmailAndPassword(auth, this.emailLogin, this.senhaLogin)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        alert("Bem vindo! " + user);
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        alert("Falha ao realizar login! " + errorMessage + " Cod. Error: " + errorCode);
+        if(errorCode == "auth/missing-email" || errorCode == "auth/user-not-found"){
+          this.emailInvalido(true);
+        }else{
+          this.emailInvalido(false);
+          this.senhaInvalido(true);
+        }
+      });
+    }
   }
 
   loginWithGoogle(){
@@ -154,8 +198,103 @@ export class InitialPage {
 
   loginWithFacebook(){
     const auth = getAuth();
+  }
 
 
+
+  cadastrarPessoaFisica(){
+    // const cardCadastro = document.getElementById("cardCadastro");
+    // cardCadastro.style.setProperty('visibility', 'hidden');
+    const cardCadastroPessoaJuridica = document.getElementById("divCadastroPessoaJuridica");
+    const txCardCadastroPessoaJuridica = document.getElementById("txCadastroPessoaFisica");
+    const cardCadastroPessoafisica = document.getElementById("divCadastroPessoaFisica");
+
+    const txCardNomeCadastro = document.getElementById("txCardNomeCadastro");
+    const tbCardNomeCadastro = document.getElementById("tbCardNomeCadastro");
+    const txCardNomeCadastroInvalido = document.getElementById("txCardNomeCadastroInvalido");
+    const txCardEmailCadastro = document.getElementById("txCardEmailCadastro");
+    const tbCardEmailCadastro = document.getElementById("tbCardEmailCadastro");
+    const txCardEmailCadastroInvalido = document.getElementById("txCardEmailCadastroInvalido");
+    const txCardCNPJCadastro = document.getElementById("txCardCNPJCadastro");
+    const tbCardCNPJCadastro = document.getElementById("tbCardCNPJCadastro");
+    const txCardCNPJCadastroInvalido = document.getElementById("txCardCNPJCadastroInvalido");
+    const txCardSenhaCadastro = document.getElementById("txCardSenhaCadastro");
+    const tbCardSenhaCadastro = document.getElementById("tbCardSenhaCadastro");
+    const txCardSenhaCadastroInvalida = document.getElementById("txCardSenhaCadastroInvalida");
+
+
+    cardCadastroPessoaJuridica.style.setProperty('z-index', '1');
+    cardCadastroPessoafisica.style.setProperty('z-index', '2');
+    cardCadastroPessoafisica.style.setProperty('transition-duration', '1s');
+    cardCadastroPessoafisica.style.setProperty('height', '100%');
+    txCardCadastroPessoaJuridica.style.setProperty('visibility', 'hidden');
+
+
+    // this.delay(5000);
+
+    
+    txCardNomeCadastro.style.setProperty('transition-delay', '0.1s');
+    tbCardNomeCadastro.style.setProperty('transition-delay', '0.1s');
+    txCardNomeCadastroInvalido.style.setProperty('transition-delay', '0.1s');
+    txCardEmailCadastro.style.setProperty('transition-delay', '0.5s');
+    tbCardEmailCadastro.style.setProperty('transition-delay', '0.5s');
+    txCardEmailCadastroInvalido.style.setProperty('transition-delay', '0.5s');
+    txCardCNPJCadastro.style.setProperty('transition-delay', '1s');
+    tbCardCNPJCadastro.style.setProperty('transition-delay', '1s');
+    txCardCNPJCadastroInvalido.style.setProperty('transition-delay', '1s');
+    txCardSenhaCadastro.style.setProperty('transition-delay', '1.5s');
+    tbCardSenhaCadastro.style.setProperty('transition-delay', '1.5s');
+    txCardSenhaCadastroInvalida.style.setProperty('transition-delay', '1.5s');
+
+    txCardNomeCadastro.style.setProperty('transition-duration', '0.5s');
+    tbCardNomeCadastro.style.setProperty('transition-duration', '0.5s');
+    txCardNomeCadastroInvalido.style.setProperty('transition-duration', '0.5s');
+    txCardEmailCadastro.style.setProperty('transition-duration', '0.5s');
+    tbCardEmailCadastro.style.setProperty('transition-duration', '0.5s');
+    txCardEmailCadastroInvalido.style.setProperty('transition-duration', '0.5s');
+    txCardCNPJCadastro.style.setProperty('transition-duration', '0.5s');
+    tbCardCNPJCadastro.style.setProperty('transition-duration', '0.5s');
+    txCardCNPJCadastroInvalido.style.setProperty('transition-duration', '0.5s');
+    txCardSenhaCadastro.style.setProperty('transition-duration', '0.5s');
+    tbCardSenhaCadastro.style.setProperty('transition-duration', '0.5s');
+    txCardSenhaCadastroInvalida.style.setProperty('transition-duration', '0.5s');
+
+    
+
+
+    txCardNomeCadastro.style.setProperty('visibility', 'visible');
+    tbCardNomeCadastro.style.setProperty('visibility', 'visible');
+    txCardNomeCadastroInvalido.style.setProperty('visibility', 'visible');
+    txCardEmailCadastro.style.setProperty('visibility', 'visible');
+    tbCardEmailCadastro.style.setProperty('visibility', 'visible');
+    txCardEmailCadastroInvalido.style.setProperty('visibility', 'visible');
+    txCardCNPJCadastro.style.setProperty('visibility', 'visible');
+    tbCardCNPJCadastro.style.setProperty('visibility', 'visible');
+    txCardCNPJCadastroInvalido.style.setProperty('visibility', 'visible');
+    txCardSenhaCadastro.style.setProperty('visibility', 'visible');
+    tbCardSenhaCadastro.style.setProperty('visibility', 'visible');
+    txCardSenhaCadastroInvalida.style.setProperty('visibility', 'visible');
+
+
+    txCardNomeCadastro.style.setProperty('opacity', '100%');
+    tbCardNomeCadastro.style.setProperty('opacity', '100%');
+    txCardNomeCadastroInvalido.style.setProperty('opacity', '100%');
+    txCardEmailCadastro.style.setProperty('opacity', '100%');
+    tbCardEmailCadastro.style.setProperty('opacity', '100%');
+    txCardEmailCadastroInvalido.style.setProperty('opacity', '100%');
+    txCardCNPJCadastro.style.setProperty('opacity', '100%');
+    tbCardCNPJCadastro.style.setProperty('opacity', '100%');
+    txCardCNPJCadastroInvalido.style.setProperty('opacity', '100%');
+    txCardSenhaCadastro.style.setProperty('opacity', '100%');
+    tbCardSenhaCadastro.style.setProperty('opacity', '100%');
+    txCardSenhaCadastroInvalida.style.setProperty('opacity', '100%');
+
+
+  }
+
+  cadastrarPessoaJuridica(){
+    const cardCadastro = document.getElementById("cardCadastro");
+    cardCadastro.style.setProperty('visibility', 'hidden');
   }
 
 

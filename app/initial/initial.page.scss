@@ -1,6 +1,7 @@
 .cardSlider{
     visibility: visible;
 }
+//**alterar
 
 .slidesInitial{
     position: fixed;
@@ -68,7 +69,9 @@ b{
 
 .btTelaLoginCadastro{
     position: fixed;
-    top: 93%;
+    height: 5%;
+    width: 18%;
+    top: 92%;
     left: 80%;
     font-size: 110%;
     color: #3880ff;
@@ -78,7 +81,7 @@ b{
 
 
 
-
+//**Alterar
 .cardLogin{
     visibility: hidden;
     position: fixed;
@@ -111,41 +114,71 @@ b{
 
 .txCardEmail{
     position: fixed;
-    top: 40%;
+    top: 42%;
     left: 25%;
-    height: 5%;
-    width: 50%;
+    height: 2%;
+    width: 10%;
     color: black;
+    background-color: white;
     font-size: 70%;
+    z-index: 10;
 }
 .tbCardEmail{
     position: fixed;
-    top: 44%;
-    left: 25%;
-    height: 5%;
-    width: 70%;
+    top: 44.7%;
+    left: 23.2%;
+    height: 5.5%;
+    width: 50%;
     color: black;
-    border-bottom: black;
+    border-style: solid;
+    border-color: transparent;
+    --padding-top: 6%;
+    z-index: 9;
 }
-.txCardSenha{
+.txCardEmailInvalido{
     position: fixed;
+    visibility: hidden;
     top: 49%;
     left: 25%;
     height: 5%;
     width: 50%;
+    color: red;
+    font-size: 60%;
+}
+.txCardSenha{
+    position: fixed;
+    top: 51%;
+    left: 25%;
+    height: 2%;
+    width: 9%;
     color: black;
+    background-color: white;
     font-size: 70%;
+    z-index: 10;
 }
 .tbCardSenha{
     position: fixed;
-    top: 53%;
+    top: 53.7%;
+    left: 23%;
+    height: 5.5%;
+    width: 50%;
+    color: black;
+    border-style: solid;
+    border-color: transparent;
+    --padding-top: 10%;
+    z-index: 9;
+
+}
+.txCardSenhaInvalida{
+    position: fixed;
+    visibility: hidden;
+    top: 58%;
     left: 25%;
     height: 5%;
     width: 50%;
-    color: black;
-    border-bottom: black;
+    color: red;
+    font-size: 60%;
 }
-
 
 
 
@@ -153,29 +186,20 @@ b{
     position: fixed;
     top: 61%;
     left: 21%;
-    width: 29.3%;    
+    width: 60%;    
     z-index: 1;
-    --padding-start: 15%;
-}
-
-.divSeparatorButtonsLogin{
-    position: fixed;
-    top: 61%;
-    left: 47%;
-    height: 8%;
-    width: 4%;
-    background-color: white;
-    z-index: 2;
+    --padding-start: 6%;
 }
 
 .btCadastrar{
     position: fixed;
-    top: 61%;
-    left: 46%;
-    width: 35%;    
-    z-index: 0;
-    --color: white;
-    --padding-end: 10%;
+    top: 69%;
+    left: 28%;
+    width: 55%;    
+    z-index: 10;
+    color: #afafaf;
+    font-size: 70%;
+
 }
 
 .divSeparadorLogin{
@@ -219,8 +243,8 @@ $button-active-blue: #1669F2;
   box-shadow: 0 3px 4px 0 rgba(0,0,0,.25);
   .google-icon-wrapper {
     position: absolute;
-    margin-top: 1px;
-    margin-left: 1px;
+    margin-top: 0%;
+    margin-left: 0%;
     width: 40px;
     height: 40px;
     border-radius: 2px;
@@ -228,8 +252,8 @@ $button-active-blue: #1669F2;
   }
   .google-icon {
     position: absolute;
-    margin-top: 11px;
-    margin-left: 11px;
+    margin-top: 25%;
+    margin-left: 25%;
     width: 18px;
     height: 18px;
   }
@@ -272,14 +296,14 @@ $button-active-blue: #1669F2;
   box-shadow: 0 3px 4px 0 rgba(0,0,0,.25);
   .facebook-icon-wrapper {
     position: absolute;
-    margin-top: 1px;
-    margin-left: 1px;
+    margin-top: 0%;
+    margin-left: 0%;
     width: 40px;
     height: 40px;
     border-radius: 2px;
     background-color: $white;
   }
-  .facebook-icon {
+  .facebook-icon { 
     position: absolute;
     margin-top: 11px;
     margin-left: 11px;
@@ -300,4 +324,242 @@ $button-active-blue: #1669F2;
   &:active {
     background: $button-active-blue;
   }
+}
+
+
+
+.cardCadastro{
+    visibility: hidden;
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    top: 0%;
+    left: 0%;
+    background-color: rgba(46, 46, 46, 0.575);
+    z-index: 10;
+}
+
+.subCardCadastro{
+    position: fixed;
+    height: 70%;
+    width: 80%;
+    top: 15%;
+    left: 10%;
+    background-color: white;
+    border-radius: 2.2%;
+    box-shadow: 0 3px 4px 0 rgba(0,0,0,.25);
+    z-index: 11;
+}
+
+
+.divCadastroPessoaFisica{
+    position: relative;
+    top: 0%;
+    left: 0%;
+    width: 100%;
+    height: 50%;
+    background-color: white;
+    border-style: solid;
+    border-color: transparent;
+    border-bottom-color: #3880ff;
+    border-top-left-radius: 2.2%;
+    border-top-right-radius: 2.2%;
+    padding-top: 30%;
+    padding-left: 18%;
+    color: #3880ff;
+    font-size: 200%;
+}
+.txCadastroPessoaFisica{
+    position: fixed;
+    top: 25%;
+    left: 25%;
+}
+
+.divCadastroPessoaJuridica{
+    position: relative;
+    top: 0%;
+    left: 0%;
+    width: 100%;
+    height: 50%;
+    background-color: transparent;
+    border-style: solid;
+    border-color: transparent;
+    padding-top: 30%;
+    padding-left: 12%;
+    color: #3880ff;
+    font-size: 200%;
+}
+
+
+.txCadastroPessoaJuridica{
+    position: fixed;
+    top: 60%;
+    left: 20%;
+}
+
+
+
+
+
+
+
+.txCardNomeCadastro{
+    opacity: 0%;
+    visibility: hidden;
+    position: fixed;
+    top: 22%;
+    left: 25%;
+    height: 2%;
+    width: 10%;
+    color: black;
+    background-color: white;
+    font-size: 70%;
+    z-index: 10;
+}
+.tbCardNomeCadastro{
+    opacity: 0%;
+    visibility: hidden;
+    position: fixed;
+    top: 24.7%;
+    left: 23.2%;
+    height: 5.5%;
+    width: 50%;
+    color: black;
+    border-style: solid;
+    border-color: transparent;
+    --padding-top: 6%;
+    z-index: 9;
+}
+.txCardNomeCadastroInvalido{
+    opacity: 0%;
+    visibility: hidden;
+    position: fixed;
+    visibility: hidden;
+    top: 29%;
+    left: 25%;
+    height: 5%;
+    width: 50%;
+    color: red;
+    font-size: 60%;
+}
+
+
+.txCardEmailCadastro{
+    opacity: 0%;
+    visibility: hidden;
+    position: fixed;
+    top: 31%;
+    left: 25%;
+    height: 2%;
+    width: 10%;
+    color: black;
+    background-color: white;
+    font-size: 70%;
+    z-index: 10;
+}
+.tbCardEmailCadastro{
+    opacity: 0%;
+    visibility: hidden;
+    position: fixed;
+    top: 33.7%;
+    left: 23.2%;
+    height: 5.5%;
+    width: 50%;
+    color: black;
+    border-style: solid;
+    border-color: transparent;
+    --padding-top: 6%;
+    z-index: 9;
+}
+.txCardEmailCadastroInvalido{
+    opacity: 0%;
+    visibility: hidden;
+    position: fixed;
+    top: 38%;
+    left: 25%;
+    height: 5%;
+    width: 50%;
+    color: red;
+    font-size: 60%;
+}
+
+
+.txCardCNPJCadastro{
+    opacity: 0%;
+    visibility: hidden;
+    position: fixed;
+    top: 40%;
+    left: 25%;
+    height: 2%;
+    width: 20%;
+    color: black;
+    background-color: white;
+    font-size: 70%;
+    z-index: 10;
+}
+.tbCardCNPJCadastro{
+    opacity: 0%;
+    visibility: hidden;
+    position: fixed;
+    top: 42.7%;
+    left: 23%;
+    height: 5.5%;
+    width: 50%;
+    color: black;
+    border-style: solid;
+    border-color: transparent;
+    --padding-top: 10%;
+    z-index: 9;
+
+}
+.txCardCNPJCadastroInvalido{
+    opacity: 0%;
+    visibility: hidden;
+    position: fixed;
+    top: 47%;
+    left: 25%;
+    height: 5%;
+    width: 50%;
+    color: red;
+    font-size: 60%;
+}
+
+.txCardSenhaCadastro{
+    opacity: 0%;
+    visibility: hidden;
+    position: fixed;
+    top: 49%;
+    left: 25%;
+    height: 2%;
+    width: 9%;
+    color: black;
+    background-color: white;
+    font-size: 70%;
+    z-index: 10;
+}
+.tbCardSenhaCadastro{
+    opacity: 0%;
+    visibility: hidden;
+    position: fixed;
+    top: 51.7%;
+    left: 23%;
+    height: 5.5%;
+    width: 50%;
+    color: black;
+    border-style: solid;
+    border-color: transparent;
+    --padding-top: 10%;
+    z-index: 9;
+
+}
+.txCardSenhaCadastroInvalida{
+    opacity: 0%;
+    visibility: hidden;
+    position: fixed;
+    top: 56%;
+    left: 25%;
+    height: 5%;
+    width: 50%;
+    color: red;
+    font-size: 60%;
 }
