@@ -82,7 +82,7 @@
     </div>
 
     <p class="txCardNomeCadastro" id="txCardNomeCadastro"><b>Nome</b></p>
-    <ion-input type="text" [(ngModel)]="nomeCadastro" class="tbCardNomeCadastro" id="tbCardNomeCadastro" placeholder="Nome Completo"></ion-input>
+    <ion-input type="text" [(ngModel)]="nomeCadastro" class="tbCardNomeCadastro" id="tbCardNomeCadastro" placeholder="nome completo"></ion-input>
     <p class="txCardNomeCadastroInvalido" id="txCardNomeCadastroInvalido">Nome inválido!</p>
     <p class="txCardEmailCadastro" id="txCardEmailCadastro"><b>E-email</b></p>
     <ion-input type="text" [(ngModel)]="emailCadastro" class="tbCardEmailCadastro" id="tbCardEmailCadastro" placeholder="nome@dominio.com"></ion-input>
@@ -93,6 +93,15 @@
     <p class="txCardSenhaCadastro" id="txCardSenhaCadastro"><b>Senha</b></p>
     <ion-input type="password" [(ngModel)]="senhaCadastro" class="tbCardSenhaCadastro" id="tbCardSenhaCadastro" placeholder="********"></ion-input>
     <p class="txCardSenhaCadastroInvalida" id="txCardSenhaCadastroInvalida">Senha Incorreta!</p>
+    <div class="divValidacaoSenha" id="divValidacaoSenha">
+      <div class="validacaoDigitos" id="validacaoDigitos"><p class="txValidacaoDigitos" id="txValidacaoDigitos">8 caracteres</p></div>
+      <div class="validacaoLetrasNumeros" id="validacaoLetrasNumeros"><p class="txValidacaoLetrasNumeros" id="txValidacaoLetrasNumeros">Letras e números</p></div>
+      <div class="validacaoLetrasM" id="validacaoLetrasM"><p class="txValidacaoLetrasM" id="txValidacaoLetrasM">Letras maiúsculas</p></div>
+      <div class="validacaoCaracEspeciais" id="validacaoCaracEspeciais"><p class="txValidacaoCaracEspeciais" id="txValidacaoCaracEspeciais">Caracteres especiais</p></div>
+    </div>
+    <p class="txCardConfirmarSenhaCadastro" id="txCardConfirmarSenhaCadastro"><b>Confirmar Senha</b></p>
+    <ion-input type="password" [(ngModel)]="confirmarSenhaCadastro" class="tbCardConfirmarSenhaCadastro" id="tbCardConfirmarSenhaCadastro" placeholder="********"></ion-input>
+    <p class="txCardConfirmarSenhaCadastroInvalida" id="txCardConfirmarSenhaCadastroInvalida">Senhas diferentes!</p>
 
   </div>
 </div>

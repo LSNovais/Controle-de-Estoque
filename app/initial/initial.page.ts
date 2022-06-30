@@ -137,9 +137,6 @@ export class InitialPage {
       txSenhaInvalido.style.setProperty('visibility', 'hidden');
     }
   }
-  delay(ms: number) {
-    return new Promise( resolve => setTimeout(resolve, ms) );
-  }
   avancarSlider(){
     this.slide1.slideNext();
   }
@@ -221,6 +218,17 @@ export class InitialPage {
     const txCardSenhaCadastro = document.getElementById("txCardSenhaCadastro");
     const tbCardSenhaCadastro = document.getElementById("tbCardSenhaCadastro");
     const txCardSenhaCadastroInvalida = document.getElementById("txCardSenhaCadastroInvalida");
+    const validacaoDigitos = document.getElementById("validacaoDigitos");
+    const validacaoLetrasNumeros = document.getElementById("validacaoLetrasNumeros");
+    const validacaoLetrasM = document.getElementById("validacaoLetrasM");
+    const validacaoCaracEspeciais = document.getElementById("validacaoCaracEspeciais");
+    const txValidacaoDigitos = document.getElementById("txValidacaoDigitos");
+    const txValidacaoLetrasNumeros = document.getElementById("txValidacaoLetrasNumeros");
+    const txValidacaoLetrasM = document.getElementById("txValidacaoLetrasM");
+    const txValidacaoCaracEspeciais = document.getElementById("txValidacaoCaracEspeciais");
+    const txCardConfirmarSenhaCadastro = document.getElementById("txCardConfirmarSenhaCadastro");
+    const tbCardConfirmarSenhaCadastro = document.getElementById("tbCardConfirmarSenhaCadastro");
+    const txCardConfirmarSenhaCadastroInvalida = document.getElementById("txCardConfirmarSenhaCadastroInvalida");
 
 
     cardCadastroPessoaJuridica.style.setProperty('z-index', '1');
@@ -229,8 +237,6 @@ export class InitialPage {
     cardCadastroPessoafisica.style.setProperty('height', '100%');
     txCardCadastroPessoaJuridica.style.setProperty('visibility', 'hidden');
 
-
-    // this.delay(5000);
 
     
     txCardNomeCadastro.style.setProperty('transition-delay', '0.1s');
@@ -245,6 +251,18 @@ export class InitialPage {
     txCardSenhaCadastro.style.setProperty('transition-delay', '1.5s');
     tbCardSenhaCadastro.style.setProperty('transition-delay', '1.5s');
     txCardSenhaCadastroInvalida.style.setProperty('transition-delay', '1.5s');
+    validacaoDigitos.style.setProperty('transition-delay', '2s');
+    txValidacaoDigitos.style.setProperty('transition-delay', '2s');
+    validacaoLetrasNumeros.style.setProperty('transition-delay', '2.2s');
+    txValidacaoLetrasNumeros.style.setProperty('transition-delay', '2.2s');
+    validacaoLetrasM.style.setProperty('transition-delay', '2.4s');
+    txValidacaoLetrasM.style.setProperty('transition-delay', '2.4s');
+    validacaoCaracEspeciais.style.setProperty('transition-delay', '2.6s');
+    txValidacaoCaracEspeciais.style.setProperty('transition-delay', '2.6s');
+    txCardConfirmarSenhaCadastro.style.setProperty('transition-delay', '3.1s');
+    tbCardConfirmarSenhaCadastro.style.setProperty('transition-delay', '3.1s');
+    txCardConfirmarSenhaCadastroInvalida.style.setProperty('transition-delay', '3.1s');
+
 
     txCardNomeCadastro.style.setProperty('transition-duration', '0.5s');
     tbCardNomeCadastro.style.setProperty('transition-duration', '0.5s');
@@ -258,9 +276,17 @@ export class InitialPage {
     txCardSenhaCadastro.style.setProperty('transition-duration', '0.5s');
     tbCardSenhaCadastro.style.setProperty('transition-duration', '0.5s');
     txCardSenhaCadastroInvalida.style.setProperty('transition-duration', '0.5s');
-
-    
-
+    validacaoDigitos.style.setProperty('transition-duration', '0.5s');
+    txValidacaoDigitos.style.setProperty('transition-duration', '0.5s');
+    validacaoLetrasNumeros.style.setProperty('transition-duration', '0.5s');
+    txValidacaoLetrasNumeros.style.setProperty('transition-duration', '0.5s');
+    validacaoLetrasM.style.setProperty('transition-duration', '0.5s');
+    txValidacaoLetrasM.style.setProperty('transition-duration', '0.5s');
+    validacaoCaracEspeciais.style.setProperty('transition-duration', '0.5s');
+    txValidacaoCaracEspeciais.style.setProperty('transition-duration', '0.5s');
+    txCardConfirmarSenhaCadastro.style.setProperty('transition-duration', '0.5s');
+    tbCardConfirmarSenhaCadastro.style.setProperty('transition-duration', '0.5s');
+    txCardConfirmarSenhaCadastroInvalida.style.setProperty('transition-duration', '0.5s');
 
     txCardNomeCadastro.style.setProperty('visibility', 'visible');
     tbCardNomeCadastro.style.setProperty('visibility', 'visible');
@@ -274,7 +300,17 @@ export class InitialPage {
     txCardSenhaCadastro.style.setProperty('visibility', 'visible');
     tbCardSenhaCadastro.style.setProperty('visibility', 'visible');
     txCardSenhaCadastroInvalida.style.setProperty('visibility', 'visible');
-
+    validacaoDigitos.style.setProperty('visibility', 'visible');
+    txValidacaoDigitos.style.setProperty('visibility', 'visible');
+    validacaoLetrasNumeros.style.setProperty('visibility', 'visible');
+    txValidacaoLetrasNumeros.style.setProperty('visibility', 'visible');
+    validacaoLetrasM.style.setProperty('visibility', 'visible');
+    txValidacaoLetrasM.style.setProperty('visibility', 'visible');
+    validacaoCaracEspeciais.style.setProperty('visibility', 'visible');
+    txValidacaoCaracEspeciais.style.setProperty('visibility', 'visible');
+    txCardConfirmarSenhaCadastro.style.setProperty('visibility', 'visible');
+    tbCardConfirmarSenhaCadastro.style.setProperty('visibility', 'visible');
+    txCardConfirmarSenhaCadastroInvalida.style.setProperty('visibility', 'visible');
 
     txCardNomeCadastro.style.setProperty('opacity', '100%');
     tbCardNomeCadastro.style.setProperty('opacity', '100%');
@@ -288,7 +324,17 @@ export class InitialPage {
     txCardSenhaCadastro.style.setProperty('opacity', '100%');
     tbCardSenhaCadastro.style.setProperty('opacity', '100%');
     txCardSenhaCadastroInvalida.style.setProperty('opacity', '100%');
-
+    validacaoDigitos.style.setProperty('opacity', '100%');
+    txValidacaoDigitos.style.setProperty('opacity', '100%');
+    validacaoLetrasNumeros.style.setProperty('opacity', '100%');
+    txValidacaoLetrasNumeros.style.setProperty('opacity', '100%');
+    validacaoLetrasM.style.setProperty('opacity', '100%');
+    txValidacaoLetrasM.style.setProperty('opacity', '100%');
+    validacaoCaracEspeciais.style.setProperty('opacity', '100%');
+    txValidacaoCaracEspeciais.style.setProperty('opacity', '100%');
+    txCardConfirmarSenhaCadastro.style.setProperty('opacity', '100%');
+    tbCardConfirmarSenhaCadastro.style.setProperty('opacity', '100%');
+    txCardConfirmarSenhaCadastroInvalida.style.setProperty('opacity', '100%');
 
   }
 
