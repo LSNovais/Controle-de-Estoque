@@ -76,9 +76,25 @@ export class InitialPage {
   @ViewChild('slideInicial1')  slide1: IonSlides;
   public emailLogin:string;
   public senhaLogin:string;
+  public nomeCadastro:string;
+  public emailCadastro:string;
+  public txEmailCadastroInvalido:string;
+  public CNPJCadastro:string;
+  public senhaCadastro:string;
+  public confirmarSenhaCadastro:string;
+
+  public validaNomeCadastro:boolean;
+  public validaEmailCadastro:boolean;
+  public validaCNPJCadastro:boolean;
+  public validaSenhaCadastro:boolean;
+  public validaConfirmSenhaCadastro:boolean;
+
+
 
 
   constructor(public navCtrl: NavController) {
+    this.txEmailCadastroInvalido = "E-mail inválido!"
+
     const auth = getAuth();
     getRedirectResult(auth)
     .then((result) => {
@@ -141,22 +157,36 @@ export class InitialPage {
     this.slide1.slideNext();
   }
 
-  createUser(){
+  abrirPopUpCadastro(){
     const cardCadastro = document.getElementById("cardCadastro");
     cardCadastro.style.setProperty('visibility', 'visible');
+  }
 
+  createUser(){
 
-    // const auth = getAuth();
-    // createUserWithEmailAndPassword(auth, email, password)
-    // .then((userCredential) => {
-    //   const user = userCredential.user;
-    //   alert("Usuario criado! " + user);
-    // })
-    // .catch((error) => {
-    //   const errorCode = error.code;
-    //   const errorMessage = error.message;
-    //   alert("Falha ao criar usuário! " + errorMessage + " Cod. Error: " + errorCode);
-    // });
+    if( (this.validaNomeCadastro) && (this.validaEmailCadastro) && (this.validaCNPJCadastro) && (this.validaSenhaCadastro) && (this.validaConfirmSenhaCadastro) ){
+      const auth = getAuth();
+      createUserWithEmailAndPassword(auth, this.emailCadastro, this.senhaCadastro)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        alert("Usuario criado! " + user);
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        if( errorCode == "auth/email-already-in-use" ){
+          this.txEmailCadastroInvalido = "E-mail em uso!"
+          const txCardEmailCadastroInvalido = document.getElementById("txCardEmailCadastroInvalido");
+          const tbCardEmailCadastro = document.getElementById("tbCardEmailCadastro");
+          txCardEmailCadastroInvalido.style.setProperty('visibility', 'visible');
+          txCardEmailCadastroInvalido.style.setProperty('opacity', '100%');
+          tbCardEmailCadastro.style.setProperty('border-color', 'red');   
+          this.validaEmailCadastro = false;
+        }else{
+          alert("Falha ao criar usuário! " + errorMessage + " Cod. Error: " + errorCode);
+        }
+      });
+    }
   }
 
   loginUser(){
@@ -199,7 +229,7 @@ export class InitialPage {
 
 
 
-  cadastrarPessoaFisica(){
+  async cadastrarPessoaFisica(){
     // const cardCadastro = document.getElementById("cardCadastro");
     // cardCadastro.style.setProperty('visibility', 'hidden');
     const cardCadastroPessoaJuridica = document.getElementById("divCadastroPessoaJuridica");
@@ -208,16 +238,12 @@ export class InitialPage {
 
     const txCardNomeCadastro = document.getElementById("txCardNomeCadastro");
     const tbCardNomeCadastro = document.getElementById("tbCardNomeCadastro");
-    const txCardNomeCadastroInvalido = document.getElementById("txCardNomeCadastroInvalido");
     const txCardEmailCadastro = document.getElementById("txCardEmailCadastro");
     const tbCardEmailCadastro = document.getElementById("tbCardEmailCadastro");
-    const txCardEmailCadastroInvalido = document.getElementById("txCardEmailCadastroInvalido");
     const txCardCNPJCadastro = document.getElementById("txCardCNPJCadastro");
     const tbCardCNPJCadastro = document.getElementById("tbCardCNPJCadastro");
-    const txCardCNPJCadastroInvalido = document.getElementById("txCardCNPJCadastroInvalido");
     const txCardSenhaCadastro = document.getElementById("txCardSenhaCadastro");
     const tbCardSenhaCadastro = document.getElementById("tbCardSenhaCadastro");
-    const txCardSenhaCadastroInvalida = document.getElementById("txCardSenhaCadastroInvalida");
     const validacaoDigitos = document.getElementById("validacaoDigitos");
     const validacaoLetrasNumeros = document.getElementById("validacaoLetrasNumeros");
     const validacaoLetrasM = document.getElementById("validacaoLetrasM");
@@ -228,7 +254,7 @@ export class InitialPage {
     const txValidacaoCaracEspeciais = document.getElementById("txValidacaoCaracEspeciais");
     const txCardConfirmarSenhaCadastro = document.getElementById("txCardConfirmarSenhaCadastro");
     const tbCardConfirmarSenhaCadastro = document.getElementById("tbCardConfirmarSenhaCadastro");
-    const txCardConfirmarSenhaCadastroInvalida = document.getElementById("txCardConfirmarSenhaCadastroInvalida");
+    const btCadastrarUsuario = document.getElementById("btCadastrarUsuario");
 
 
     cardCadastroPessoaJuridica.style.setProperty('z-index', '1');
@@ -237,45 +263,36 @@ export class InitialPage {
     cardCadastroPessoafisica.style.setProperty('height', '100%');
     txCardCadastroPessoaJuridica.style.setProperty('visibility', 'hidden');
 
-
     
     txCardNomeCadastro.style.setProperty('transition-delay', '0.1s');
     tbCardNomeCadastro.style.setProperty('transition-delay', '0.1s');
-    txCardNomeCadastroInvalido.style.setProperty('transition-delay', '0.1s');
-    txCardEmailCadastro.style.setProperty('transition-delay', '0.5s');
-    tbCardEmailCadastro.style.setProperty('transition-delay', '0.5s');
-    txCardEmailCadastroInvalido.style.setProperty('transition-delay', '0.5s');
-    txCardCNPJCadastro.style.setProperty('transition-delay', '1s');
-    tbCardCNPJCadastro.style.setProperty('transition-delay', '1s');
-    txCardCNPJCadastroInvalido.style.setProperty('transition-delay', '1s');
-    txCardSenhaCadastro.style.setProperty('transition-delay', '1.5s');
-    tbCardSenhaCadastro.style.setProperty('transition-delay', '1.5s');
-    txCardSenhaCadastroInvalida.style.setProperty('transition-delay', '1.5s');
-    validacaoDigitos.style.setProperty('transition-delay', '2s');
-    txValidacaoDigitos.style.setProperty('transition-delay', '2s');
-    validacaoLetrasNumeros.style.setProperty('transition-delay', '2.2s');
-    txValidacaoLetrasNumeros.style.setProperty('transition-delay', '2.2s');
-    validacaoLetrasM.style.setProperty('transition-delay', '2.4s');
-    txValidacaoLetrasM.style.setProperty('transition-delay', '2.4s');
-    validacaoCaracEspeciais.style.setProperty('transition-delay', '2.6s');
-    txValidacaoCaracEspeciais.style.setProperty('transition-delay', '2.6s');
-    txCardConfirmarSenhaCadastro.style.setProperty('transition-delay', '3.1s');
-    tbCardConfirmarSenhaCadastro.style.setProperty('transition-delay', '3.1s');
-    txCardConfirmarSenhaCadastroInvalida.style.setProperty('transition-delay', '3.1s');
+    txCardEmailCadastro.style.setProperty('transition-delay', '0.2s');
+    tbCardEmailCadastro.style.setProperty('transition-delay', '0.2s');
+    txCardCNPJCadastro.style.setProperty('transition-delay', '0.3s');
+    tbCardCNPJCadastro.style.setProperty('transition-delay', '0.3s');
+    txCardSenhaCadastro.style.setProperty('transition-delay', '0.4s');
+    tbCardSenhaCadastro.style.setProperty('transition-delay', '0.4s');
+    validacaoDigitos.style.setProperty('transition-delay', '0.5s');
+    txValidacaoDigitos.style.setProperty('transition-delay', '0.5s');
+    validacaoLetrasNumeros.style.setProperty('transition-delay', '0.5s');
+    txValidacaoLetrasNumeros.style.setProperty('transition-delay', '0.5s');
+    validacaoLetrasM.style.setProperty('transition-delay', '0.5s');
+    txValidacaoLetrasM.style.setProperty('transition-delay', '0.5s');
+    validacaoCaracEspeciais.style.setProperty('transition-delay', '0.5s');
+    txValidacaoCaracEspeciais.style.setProperty('transition-delay', '0.5s');
+    txCardConfirmarSenhaCadastro.style.setProperty('transition-delay', '0.6s');
+    tbCardConfirmarSenhaCadastro.style.setProperty('transition-delay', '0.6s');
+    btCadastrarUsuario.style.setProperty('transition-delay', '0.7s');
 
 
     txCardNomeCadastro.style.setProperty('transition-duration', '0.5s');
     tbCardNomeCadastro.style.setProperty('transition-duration', '0.5s');
-    txCardNomeCadastroInvalido.style.setProperty('transition-duration', '0.5s');
     txCardEmailCadastro.style.setProperty('transition-duration', '0.5s');
     tbCardEmailCadastro.style.setProperty('transition-duration', '0.5s');
-    txCardEmailCadastroInvalido.style.setProperty('transition-duration', '0.5s');
     txCardCNPJCadastro.style.setProperty('transition-duration', '0.5s');
     tbCardCNPJCadastro.style.setProperty('transition-duration', '0.5s');
-    txCardCNPJCadastroInvalido.style.setProperty('transition-duration', '0.5s');
     txCardSenhaCadastro.style.setProperty('transition-duration', '0.5s');
     tbCardSenhaCadastro.style.setProperty('transition-duration', '0.5s');
-    txCardSenhaCadastroInvalida.style.setProperty('transition-duration', '0.5s');
     validacaoDigitos.style.setProperty('transition-duration', '0.5s');
     txValidacaoDigitos.style.setProperty('transition-duration', '0.5s');
     validacaoLetrasNumeros.style.setProperty('transition-duration', '0.5s');
@@ -286,20 +303,16 @@ export class InitialPage {
     txValidacaoCaracEspeciais.style.setProperty('transition-duration', '0.5s');
     txCardConfirmarSenhaCadastro.style.setProperty('transition-duration', '0.5s');
     tbCardConfirmarSenhaCadastro.style.setProperty('transition-duration', '0.5s');
-    txCardConfirmarSenhaCadastroInvalida.style.setProperty('transition-duration', '0.5s');
+    btCadastrarUsuario.style.setProperty('transition-duration', '0.5s');
 
     txCardNomeCadastro.style.setProperty('visibility', 'visible');
     tbCardNomeCadastro.style.setProperty('visibility', 'visible');
-    txCardNomeCadastroInvalido.style.setProperty('visibility', 'visible');
     txCardEmailCadastro.style.setProperty('visibility', 'visible');
     tbCardEmailCadastro.style.setProperty('visibility', 'visible');
-    txCardEmailCadastroInvalido.style.setProperty('visibility', 'visible');
     txCardCNPJCadastro.style.setProperty('visibility', 'visible');
     tbCardCNPJCadastro.style.setProperty('visibility', 'visible');
-    txCardCNPJCadastroInvalido.style.setProperty('visibility', 'visible');
     txCardSenhaCadastro.style.setProperty('visibility', 'visible');
     tbCardSenhaCadastro.style.setProperty('visibility', 'visible');
-    txCardSenhaCadastroInvalida.style.setProperty('visibility', 'visible');
     validacaoDigitos.style.setProperty('visibility', 'visible');
     txValidacaoDigitos.style.setProperty('visibility', 'visible');
     validacaoLetrasNumeros.style.setProperty('visibility', 'visible');
@@ -310,20 +323,16 @@ export class InitialPage {
     txValidacaoCaracEspeciais.style.setProperty('visibility', 'visible');
     txCardConfirmarSenhaCadastro.style.setProperty('visibility', 'visible');
     tbCardConfirmarSenhaCadastro.style.setProperty('visibility', 'visible');
-    txCardConfirmarSenhaCadastroInvalida.style.setProperty('visibility', 'visible');
+    btCadastrarUsuario.style.setProperty('visibility', 'visible');
 
     txCardNomeCadastro.style.setProperty('opacity', '100%');
     tbCardNomeCadastro.style.setProperty('opacity', '100%');
-    txCardNomeCadastroInvalido.style.setProperty('opacity', '100%');
     txCardEmailCadastro.style.setProperty('opacity', '100%');
     tbCardEmailCadastro.style.setProperty('opacity', '100%');
-    txCardEmailCadastroInvalido.style.setProperty('opacity', '100%');
     txCardCNPJCadastro.style.setProperty('opacity', '100%');
     tbCardCNPJCadastro.style.setProperty('opacity', '100%');
-    txCardCNPJCadastroInvalido.style.setProperty('opacity', '100%');
     txCardSenhaCadastro.style.setProperty('opacity', '100%');
     tbCardSenhaCadastro.style.setProperty('opacity', '100%');
-    txCardSenhaCadastroInvalida.style.setProperty('opacity', '100%');
     validacaoDigitos.style.setProperty('opacity', '100%');
     txValidacaoDigitos.style.setProperty('opacity', '100%');
     validacaoLetrasNumeros.style.setProperty('opacity', '100%');
@@ -334,7 +343,31 @@ export class InitialPage {
     txValidacaoCaracEspeciais.style.setProperty('opacity', '100%');
     txCardConfirmarSenhaCadastro.style.setProperty('opacity', '100%');
     tbCardConfirmarSenhaCadastro.style.setProperty('opacity', '100%');
-    txCardConfirmarSenhaCadastroInvalida.style.setProperty('opacity', '100%');
+    btCadastrarUsuario.style.setProperty('opacity', '100%');
+
+    await delay(1000);
+
+    cardCadastroPessoafisica.style.setProperty('border-bottom-color', 'transparent');
+    cardCadastroPessoafisica.style.setProperty('border-radius', '2.2%');
+
+    validacaoDigitos.style.setProperty('transition-delay', '0s');
+    txValidacaoDigitos.style.setProperty('transition-delay', '0s');
+    validacaoLetrasNumeros.style.setProperty('transition-delay', '0s');
+    txValidacaoLetrasNumeros.style.setProperty('transition-delay', '0s');
+    validacaoLetrasM.style.setProperty('transition-delay', '0s');
+    txValidacaoLetrasM.style.setProperty('transition-delay', '0s');
+    validacaoCaracEspeciais.style.setProperty('transition-delay', '0s');
+    txValidacaoCaracEspeciais.style.setProperty('transition-delay', '0s');
+
+    validacaoDigitos.style.setProperty('transition-duration', '0s');
+    txValidacaoDigitos.style.setProperty('transition-duration', '0s');
+    validacaoLetrasNumeros.style.setProperty('transition-duration', '0s');
+    txValidacaoLetrasNumeros.style.setProperty('transition-duration', '0s');
+    validacaoLetrasM.style.setProperty('transition-duration', '0s');
+    txValidacaoLetrasM.style.setProperty('transition-duration', '0s');
+    validacaoCaracEspeciais.style.setProperty('transition-duration', '0s');
+    txValidacaoCaracEspeciais.style.setProperty('transition-duration', '0s');
+
 
   }
 
@@ -343,5 +376,153 @@ export class InitialPage {
     cardCadastro.style.setProperty('visibility', 'hidden');
   }
 
+  perdaFocoNomeCad(){
+    const regex = /^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$/;
+    const txCardNomeCadastroInvalido = document.getElementById("txCardNomeCadastroInvalido");
+    const tbCardNomeCadastro = document.getElementById("tbCardNomeCadastro");
 
+    if( this.nomeCadastro == null || !regex.test(this.nomeCadastro) ){
+      txCardNomeCadastroInvalido.style.setProperty('visibility', 'visible');
+      txCardNomeCadastroInvalido.style.setProperty('opacity', '100%');
+      tbCardNomeCadastro.style.setProperty('border-color', 'red');    
+      this.validaNomeCadastro = false;
+    }else{
+      txCardNomeCadastroInvalido.style.setProperty('visibility', 'hidden');
+      txCardNomeCadastroInvalido.style.setProperty('opacity', '0%');
+      tbCardNomeCadastro.style.setProperty('border-color', 'transparent');    
+      this.validaNomeCadastro = true;
+    }
+  }
+
+  perdaFocoEmailCad(){
+    const txCardEmailCadastroInvalido = document.getElementById("txCardEmailCadastroInvalido");
+    const tbCardEmailCadastro = document.getElementById("tbCardEmailCadastro");
+
+    if( this.emailCadastro == null || !this.emailCadastro.includes('@') || !this.emailCadastro.includes('.') ){
+      txCardEmailCadastroInvalido.style.setProperty('visibility', 'visible');
+      txCardEmailCadastroInvalido.style.setProperty('opacity', '100%');
+      tbCardEmailCadastro.style.setProperty('border-color', 'red');   
+      this.validaEmailCadastro = false;
+    }else{
+      txCardEmailCadastroInvalido.style.setProperty('visibility', 'hidden');
+      txCardEmailCadastroInvalido.style.setProperty('opacity', '0%');
+      tbCardEmailCadastro.style.setProperty('border-color', 'transparent');    
+      this.validaEmailCadastro = true;
+    }
+  }
+
+  perdaFocoCNPJCad(){
+    const txCardCNPJCadastroInvalido = document.getElementById("txCardCNPJCadastroInvalido");
+    const tbCardCNPJCadastro = document.getElementById("tbCardCNPJCadastro");
+
+    if(this.CNPJCadastro.length !== 15){
+      txCardCNPJCadastroInvalido.style.setProperty('visibility', 'visible');
+      txCardCNPJCadastroInvalido.style.setProperty('opacity', '100%');
+      tbCardCNPJCadastro.style.setProperty('border-color', 'red');   
+      this.validaCNPJCadastro = false; 
+    }else{
+      txCardCNPJCadastroInvalido.style.setProperty('visibility', 'hidden');
+      txCardCNPJCadastroInvalido.style.setProperty('opacity', '0%');
+      tbCardCNPJCadastro.style.setProperty('border-color', 'transparent');    
+      this.validaCNPJCadastro = true;
+    }
+  }
+
+  keyPressCNPJ(){
+    if(this.CNPJCadastro.length == 3){
+      this.CNPJCadastro += '.';
+    }else if(this.CNPJCadastro.length == 7){
+      this.CNPJCadastro += '/0001-';
+    }
+  }
+
+  keyPressSenhaCad(){
+    const validacaoDigitos = document.getElementById("txValidacaoDigitos");
+    const validacaoLetrasNumeros = document.getElementById("txValidacaoLetrasNumeros");
+    const validacaoLetrasM = document.getElementById("txValidacaoLetrasM");
+    const validacaoCaracEspeciais = document.getElementById("txValidacaoCaracEspeciais");
+
+    const regexNumeros = /(?=.*[0-9])/;
+    const regexLetrasMin = /(?=.*[a-z])/;
+    const regexLetrasMai = /(?=.*[A-Z])/;
+    const regexCaracEspeciais = /(?=.*[}{,.^?~=+\-_\/*\-+.\|@#$%&()])/;
+
+    if( regexNumeros.test(this.senhaCadastro) ){
+      validacaoLetrasNumeros.style.setProperty('color', 'green');    
+      this.validaSenhaCadastro = true;
+    }else{
+      validacaoLetrasNumeros.style.setProperty('color', 'red');    
+      this.validaSenhaCadastro = false;
+    }
+
+    if( regexLetrasMin.test(this.senhaCadastro) && regexLetrasMai.test(this.senhaCadastro) ){
+      validacaoLetrasM.style.setProperty('color', 'green');    
+      this.validaSenhaCadastro = true;
+    }else{
+      validacaoLetrasM.style.setProperty('color', 'red');    
+      this.validaSenhaCadastro = false;
+    }
+
+    if( regexCaracEspeciais.test(this.senhaCadastro) ){
+      validacaoCaracEspeciais.style.setProperty('color', 'green');    
+      this.validaSenhaCadastro = true;
+    }else{
+      validacaoCaracEspeciais.style.setProperty('color', 'red');    
+      this.validaSenhaCadastro = false;
+    }
+
+    if( this.senhaCadastro.length >= 8 ){
+      validacaoDigitos.style.setProperty('color', 'green');    
+      this.validaSenhaCadastro = true;
+    }else{
+      validacaoDigitos.style.setProperty('color', 'red');    
+      this.validaSenhaCadastro = false;
+    }
+
+    if( this.senhaCadastro.length == 0 ){
+      validacaoDigitos.style.setProperty('color', "#afafaf");    
+      validacaoLetrasNumeros.style.setProperty('color', '#afafaf');    
+      validacaoLetrasM.style.setProperty('color', '#afafaf');    
+      validacaoCaracEspeciais.style.setProperty('color', '#afafaf');   
+      this.validaSenhaCadastro = false; 
+    }
+
+  }
+
+  perdaFocoSenhaCad(){
+    const validacaoDigitos = document.getElementById("txValidacaoDigitos");
+    const validacaoLetrasNumeros = document.getElementById("txValidacaoLetrasNumeros");
+    const validacaoLetrasM = document.getElementById("txValidacaoLetrasM");
+    const validacaoCaracEspeciais = document.getElementById("txValidacaoCaracEspeciais");
+
+    if( this.senhaCadastro.length == 0 ){
+      validacaoDigitos.style.setProperty('color', "#afafaf");    
+      validacaoLetrasNumeros.style.setProperty('color', '#afafaf');    
+      validacaoLetrasM.style.setProperty('color', '#afafaf');    
+      validacaoCaracEspeciais.style.setProperty('color', '#afafaf');    
+    }
+  }
+
+  perdaFocoConfirSenhaCad(){
+    const txCardConfirmarSenhaCadastroInvalida = document.getElementById("txCardConfirmarSenhaCadastroInvalida");
+    const tbCardConfirmarSenhaCadastro = document.getElementById("tbCardConfirmarSenhaCadastro");
+
+    if(this.senhaCadastro !== this.confirmarSenhaCadastro){
+      txCardConfirmarSenhaCadastroInvalida.style.setProperty('visibility', 'visible');
+      txCardConfirmarSenhaCadastroInvalida.style.setProperty('opacity', '100%');
+      tbCardConfirmarSenhaCadastro.style.setProperty('border-color', 'red');    
+      this.validaConfirmSenhaCadastro = false;
+    }else{
+      txCardConfirmarSenhaCadastroInvalida.style.setProperty('visibility', 'hidden');
+      txCardConfirmarSenhaCadastroInvalida.style.setProperty('opacity', '0%');
+      tbCardConfirmarSenhaCadastro.style.setProperty('border-color', 'transparent');   
+      this.validaConfirmSenhaCadastro = true; 
+    }
+  }
+
+
+}
+
+function delay(ms: number) {
+  return new Promise( resolve => setTimeout(resolve, ms) );
 }

@@ -48,7 +48,7 @@
     <p class="txCardSenhaInvalida" id="txCardSenhaInvalida">Senha Incorreta!</p>
 
     <ion-button class="btEntrar" (click)="loginUser()">Entrar</ion-button>
-    <div class="btCadastrar" (click)="createUser()">Não possui conta? Registre-se agora!</div>
+    <div class="btCadastrar" (click)="abrirPopUpCadastro()">Não possui conta? Registre-se agora!</div>
 
     <div class="divSeparadorLogin"></div>
     <p class="txOu">ou</p>
@@ -82,26 +82,27 @@
     </div>
 
     <p class="txCardNomeCadastro" id="txCardNomeCadastro"><b>Nome</b></p>
-    <ion-input type="text" [(ngModel)]="nomeCadastro" class="tbCardNomeCadastro" id="tbCardNomeCadastro" placeholder="nome completo"></ion-input>
+    <ion-input type="text" [(ngModel)]="nomeCadastro" (ionBlur)="perdaFocoNomeCad()" class="tbCardNomeCadastro" id="tbCardNomeCadastro" placeholder="nome completo"></ion-input>
     <p class="txCardNomeCadastroInvalido" id="txCardNomeCadastroInvalido">Nome inválido!</p>
     <p class="txCardEmailCadastro" id="txCardEmailCadastro"><b>E-email</b></p>
-    <ion-input type="text" [(ngModel)]="emailCadastro" class="tbCardEmailCadastro" id="tbCardEmailCadastro" placeholder="nome@dominio.com"></ion-input>
-    <p class="txCardEmailCadastroInvalido" id="txCardEmailCadastroInvalido">E-email inválido!</p>
+    <ion-input type="text" [(ngModel)]="emailCadastro" (ionBlur)="perdaFocoEmailCad()" class="tbCardEmailCadastro" id="tbCardEmailCadastro" placeholder="nome@dominio.com"></ion-input>
+    <p class="txCardEmailCadastroInvalido" [(ngModel)]="txEmailCadastroInvalido" id="txCardEmailCadastroInvalido">{{txEmailCadastroInvalido}}</p>
     <p class="txCardCNPJCadastro" id="txCardCNPJCadastro"><b>CNPJ Empresa</b></p>
-    <ion-input type="text" [(ngModel)]="CNPJCadastro" class="tbCardCNPJCadastro" id="tbCardCNPJCadastro" placeholder="nome@dominio.com"></ion-input>
+    <ion-input type="tel" pattern=".{10,11}[0-9]+$" maxlength="15" [(ngModel)]="CNPJCadastro" (ionBlur)="perdaFocoCNPJCad()" (keyup)="keyPressCNPJ()" class="tbCardCNPJCadastro" id="tbCardCNPJCadastro" placeholder="xxx.xxx/0001-xx"></ion-input>
     <p class="txCardCNPJCadastroInvalido" id="txCardCNPJCadastroInvalido">CNPJ inválido!</p>
     <p class="txCardSenhaCadastro" id="txCardSenhaCadastro"><b>Senha</b></p>
-    <ion-input type="password" [(ngModel)]="senhaCadastro" class="tbCardSenhaCadastro" id="tbCardSenhaCadastro" placeholder="********"></ion-input>
+    <ion-input type="password" [(ngModel)]="senhaCadastro" (ionBlur)="perdaFocoSenhaCad()" (keydown)="keyPressSenhaCad()" class="tbCardSenhaCadastro" id="tbCardSenhaCadastro" placeholder="********"></ion-input>
     <p class="txCardSenhaCadastroInvalida" id="txCardSenhaCadastroInvalida">Senha Incorreta!</p>
     <div class="divValidacaoSenha" id="divValidacaoSenha">
-      <div class="validacaoDigitos" id="validacaoDigitos"><p class="txValidacaoDigitos" id="txValidacaoDigitos">8 caracteres</p></div>
-      <div class="validacaoLetrasNumeros" id="validacaoLetrasNumeros"><p class="txValidacaoLetrasNumeros" id="txValidacaoLetrasNumeros">Letras e números</p></div>
-      <div class="validacaoLetrasM" id="validacaoLetrasM"><p class="txValidacaoLetrasM" id="txValidacaoLetrasM">Letras maiúsculas</p></div>
-      <div class="validacaoCaracEspeciais" id="validacaoCaracEspeciais"><p class="txValidacaoCaracEspeciais" id="txValidacaoCaracEspeciais">Caracteres especiais</p></div>
+      <div class="validacaoDigitos" id="validacaoDigitos"><p class="txValidacaoDigitos" id="txValidacaoDigitos">Mínimo de 8 caracteres.</p></div>
+      <div class="validacaoLetrasNumeros" id="validacaoLetrasNumeros"><p class="txValidacaoLetrasNumeros" id="txValidacaoLetrasNumeros">Números.</p></div>
+      <div class="validacaoLetrasM" id="validacaoLetrasM"><p class="txValidacaoLetrasM" id="txValidacaoLetrasM">Letras maiúsculas e minúsculas.</p></div>
+      <div class="validacaoCaracEspeciais" id="validacaoCaracEspeciais"><p class="txValidacaoCaracEspeciais" id="txValidacaoCaracEspeciais">Caracteres especiais (Ex: *,@/\).</p></div>
     </div>
     <p class="txCardConfirmarSenhaCadastro" id="txCardConfirmarSenhaCadastro"><b>Confirmar Senha</b></p>
-    <ion-input type="password" [(ngModel)]="confirmarSenhaCadastro" class="tbCardConfirmarSenhaCadastro" id="tbCardConfirmarSenhaCadastro" placeholder="********"></ion-input>
+    <ion-input type="password" [(ngModel)]="confirmarSenhaCadastro" (ionBlur)="perdaFocoConfirSenhaCad()" class="tbCardConfirmarSenhaCadastro" id="tbCardConfirmarSenhaCadastro" placeholder="********"></ion-input>
     <p class="txCardConfirmarSenhaCadastroInvalida" id="txCardConfirmarSenhaCadastroInvalida">Senhas diferentes!</p>
+    <ion-button class="btCadastrarUsuario" id="btCadastrarUsuario" (click)="createUser()">Cadastrar</ion-button>
 
   </div>
 </div>

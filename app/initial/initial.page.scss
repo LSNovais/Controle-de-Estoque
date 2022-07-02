@@ -407,7 +407,7 @@ $button-active-blue: #1669F2;
     opacity: 0%;
     visibility: hidden;
     position: fixed;
-    top: 20%;
+    top: 19%;
     left: 20%;
     height: 2%;
     width: 10%;
@@ -420,7 +420,7 @@ $button-active-blue: #1669F2;
     opacity: 0%;
     visibility: hidden;
     position: fixed;
-    top: 22.7%;
+    top: 21.7%;
     left: 18.2%;
     height: 5.5%;
     width: 50%;
@@ -429,18 +429,20 @@ $button-active-blue: #1669F2;
     border-color: transparent;
     --padding-top: 6%;
     z-index: 9;
+    font-size: 90%;
 }
 .txCardNomeCadastroInvalido{
     opacity: 0%;
     visibility: hidden;
     position: fixed;
     visibility: hidden;
-    top: 27%;
+    top: 25.9%;
     left: 20%;
     height: 5%;
     width: 50%;
     color: red;
     font-size: 60%;
+    z-index: 2;
 }
 
 
@@ -448,7 +450,7 @@ $button-active-blue: #1669F2;
     opacity: 0%;
     visibility: hidden;
     position: fixed;
-    top: 29%;
+    top: 28%;
     left: 20%;
     height: 2%;
     width: 10%;
@@ -461,7 +463,7 @@ $button-active-blue: #1669F2;
     opacity: 0%;
     visibility: hidden;
     position: fixed;
-    top: 31.7%;
+    top: 30.7%;
     left: 18.2%;
     height: 5.5%;
     width: 50%;
@@ -470,17 +472,19 @@ $button-active-blue: #1669F2;
     border-color: transparent;
     --padding-top: 6%;
     z-index: 9;
+    font-size: 90%;
 }
 .txCardEmailCadastroInvalido{
     opacity: 0%;
     visibility: hidden;
     position: fixed;
-    top: 36%;
+    top: 34.9%;
     left: 20%;
     height: 5%;
     width: 50%;
     color: red;
     font-size: 60%;
+    z-index: 2;
 }
 
 
@@ -488,7 +492,7 @@ $button-active-blue: #1669F2;
     opacity: 0%;
     visibility: hidden;
     position: fixed;
-    top: 38%;
+    top: 37%;
     left: 20%;
     height: 2%;
     width: 20%;
@@ -501,7 +505,7 @@ $button-active-blue: #1669F2;
     opacity: 0%;
     visibility: hidden;
     position: fixed;
-    top: 40.7%;
+    top: 39.7%;
     left: 18%;
     height: 5.5%;
     width: 50%;
@@ -510,25 +514,27 @@ $button-active-blue: #1669F2;
     border-color: transparent;
     --padding-top: 10%;
     z-index: 9;
+    font-size: 90%;
 
 }
 .txCardCNPJCadastroInvalido{
     opacity: 0%;
     visibility: hidden;
     position: fixed;
-    top: 45%;
+    top: 43.9%;
     left: 20%;
     height: 5%;
     width: 50%;
     color: red;
     font-size: 60%;
+    z-index: 2;
 }
 
 .txCardSenhaCadastro{
     opacity: 0%;
     visibility: hidden;
     position: fixed;
-    top: 47%;
+    top: 46%;
     left: 20%;
     height: 2%;
     width: 9%;
@@ -541,7 +547,7 @@ $button-active-blue: #1669F2;
     opacity: 0%;
     visibility: hidden;
     position: fixed;
-    top: 49.7%;
+    top: 48.7%;
     left: 18%;
     height: 5.5%;
     width: 50%;
@@ -550,13 +556,14 @@ $button-active-blue: #1669F2;
     border-color: transparent;
     --padding-top: 10%;
     z-index: 9;
+    font-size: 90%;
 
 }
 .txCardSenhaCadastroInvalida{
     opacity: 0%;
     visibility: hidden;
     position: fixed;
-    top: 54%;
+    top: 53%;
     left: 20%;
     height: 5%;
     width: 50%;
@@ -566,7 +573,7 @@ $button-active-blue: #1669F2;
 
 .divValidacaoSenha{
     position: fixed;
-    top: 56%;
+    top: 54%;
     left: 20%;
     height: 12%;
     width: 50%;
@@ -598,7 +605,7 @@ $button-active-blue: #1669F2;
     opacity: 0%;
     visibility: hidden;
     position: fixed;
-    top: 70%;
+    top: 68%;
     left: 20%;
     height: 2%;
     width: 25%;
@@ -611,7 +618,7 @@ $button-active-blue: #1669F2;
     opacity: 0%;
     visibility: hidden;
     position: fixed;
-    top: 72.7%;
+    top: 70.7%;
     left: 18%;
     height: 5.5%;
     width: 50%;
@@ -620,16 +627,30 @@ $button-active-blue: #1669F2;
     border-color: transparent;
     --padding-top: 10%;
     z-index: 9;
+    font-size: 90%;
 
 }
 .txCardConfirmarSenhaCadastroInvalida{
     opacity: 0%;
     visibility: hidden;
     position: fixed;
-    top: 77%;
+    top: 74.9%;
     left: 20%;
     height: 5%;
     width: 50%;
     color: red;
     font-size: 60%;
+    z-index: 2;
+}
+
+.btCadastrarUsuario{
+    opacity: 0%;
+    visibility: hidden;
+    position: fixed;
+    top: 78%;
+    left: 30%;
+    width: 40%;    
+    font-size: 70%;
+    z-index: 2;
+    --padding-start: 5%;
 }
