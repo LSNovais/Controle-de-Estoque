@@ -47,7 +47,7 @@
     <ion-input type="password" [(ngModel)]="senhaLogin" class="tbCardSenha" id="tbCardSenha" placeholder="********"></ion-input>
     <p class="txCardSenhaInvalida" id="txCardSenhaInvalida">Senha Incorreta!</p>
 
-    <ion-button class="btEntrar" (click)="loginUser()">Entrar</ion-button>
+    <ion-button class="btEntrar" id="btEntrar" expand="full" (click)="loginUser()">Entrar</ion-button>
     <div class="btCadastrar" (click)="abrirPopUpCadastro()">Não possui conta? Registre-se agora!</div>
 
     <div class="divSeparadorLogin"></div>
@@ -103,6 +103,7 @@
     <ion-input type="password" [(ngModel)]="confirmarSenhaCadastro" (ionBlur)="perdaFocoConfirSenhaCad()" class="tbCardConfirmarSenhaCadastro" id="tbCardConfirmarSenhaCadastro" placeholder="********"></ion-input>
     <p class="txCardConfirmarSenhaCadastroInvalida" id="txCardConfirmarSenhaCadastroInvalida">Senhas diferentes!</p>
     <ion-button class="btCadastrarUsuario" id="btCadastrarUsuario" (click)="createUser()">Cadastrar</ion-button>
+    <div class="btFecharPopUpCadastro" id="btFecharPopUpCadastro" (click)="fecharPopUpCadastro()">Cancelar</div>
 
   </div>
 </div>

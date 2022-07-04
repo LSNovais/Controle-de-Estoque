@@ -5,8 +5,9 @@
 
 .slidesInitial{
     position: fixed;
-    width: 104%;
-    height: 100%;
+    width: 106%;
+    height: 104%;
+    top: -3%;
     left: -2.5%;
 }
 
@@ -21,6 +22,7 @@
     position: relative;
     width: 100%;
     height: 100%;
+    border-color: transparent;
 }
 
 h1{
@@ -72,7 +74,7 @@ b{
     height: 5%;
     width: 18%;
     top: 92%;
-    left: 80%;
+    left: 78%;
     font-size: 110%;
     color: #3880ff;
 }
@@ -341,7 +343,7 @@ $button-active-blue: #1669F2;
 
 .subCardCadastro{
     position: fixed;
-    height: 70%;
+    height: 75%;
     width: 80%;
     top: 15%;
     left: 10%;
@@ -647,10 +649,23 @@ $button-active-blue: #1669F2;
     opacity: 0%;
     visibility: hidden;
     position: fixed;
-    top: 78%;
+    top: 79%;
     left: 30%;
     width: 40%;    
     font-size: 70%;
     z-index: 2;
     --padding-start: 5%;
+}
+
+.btFecharPopUpCadastro{
+    opacity: 0%;
+    visibility: hidden;
+    position: fixed;    
+    top: 86.5%;
+    left: 42%;
+    width: 55%;    
+    z-index: 10;
+    color: #afafaf;
+    font-size: 80%;
+    z-index: 2;
 }

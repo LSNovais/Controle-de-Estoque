@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { IonSlides, NavController} from '@ionic/angular';
+import { IonSlides, NavController, Platform} from '@ionic/angular';
 import { Routes, RouterModule } from '@angular/router';
-
+import { Tab1Page } from '../tab1/tab1.page';
+import { RouterOutlet, Router, ActivationStart } from '@angular/router';
 
 //Firebase
 import { initializeApp } from "firebase/app";
@@ -22,9 +23,6 @@ const firebaseConfig = {
   measurementId: "G-KB25WTR1PR"
 };
 
-// const routes: Routes = [
-//   { path: 'homepage', loadChildren: '../tab1/tab1.page' };
-// ]
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
@@ -72,7 +70,10 @@ const password:string = null;
   templateUrl: './initial.page.html',
   styleUrls: ['./initial.page.scss'],
 })
-export class InitialPage {
+export class InitialPage implements OnInit {
+  routes : Routes;
+  @ViewChild(RouterOutlet) outlet: RouterOutlet;
+  @ViewChild('myNav') nav: NavController
   @ViewChild('slideInicial1')  slide1: IonSlides;
   public emailLogin:string;
   public senhaLogin:string;
@@ -92,7 +93,7 @@ export class InitialPage {
 
 
 
-  constructor(public navCtrl: NavController) {
+  constructor(public navCtrl: NavController, public router: Router, private platform: Platform) {
     this.txEmailCadastroInvalido = "E-mail inválido!"
 
     const auth = getAuth();
@@ -105,7 +106,7 @@ export class InitialPage {
       // The signed-in user info.
       const user = result.user;
       alert("Logou com sucesso! " + user);
-      // this.navCtrl.navigateRoot('././tab1/tab1.page');
+      // this.navCtrl.navigateRoot('./././tab1/tab1.page');
 
     }).catch((error) => {
       // Handle Errors here.
@@ -119,7 +120,12 @@ export class InitialPage {
       alert("Falha ao logar! -> errorCode: " + errorCode + " errorMessage: " + errorMessage);
     });
    }
-
+   ngOnInit(): void {
+    this.router.events.subscribe(e => {
+      if (e instanceof ActivationStart && e.snapshot.outlet === "administration")
+        this.outlet.deactivate();
+    });
+  }
   continuaTelaLoginCadastro(){
     const slider = document.getElementById("cardSlider");
     const telaInicial = document.getElementById("cardLogin");
@@ -196,23 +202,24 @@ export class InitialPage {
       this.emailInvalido(false);
       this.senhaInvalido(true);
     }else{
-      const auth = getAuth();
-      signInWithEmailAndPassword(auth, this.emailLogin, this.senhaLogin)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        alert("Bem vindo! " + user);
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
+
+    const auth = getAuth();
+    signInWithEmailAndPassword(auth, this.emailLogin, this.senhaLogin)
+    .then((userCredential) => {
+      const user = userCredential.user;
+      alert("Bem vindo! " + user.displayName);
+      window.location.href = "/home/tabs/tab2";
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      if(errorCode == "auth/missing-email" || errorCode == "auth/user-not-found" || errorCode == "auth/invalid-email"){
+        this.emailInvalido(true);
+        this.senhaInvalido(false);
+      }else{
         alert("Falha ao realizar login! " + errorMessage + " Cod. Error: " + errorCode);
-        if(errorCode == "auth/missing-email" || errorCode == "auth/user-not-found"){
-          this.emailInvalido(true);
-        }else{
-          this.emailInvalido(false);
-          this.senhaInvalido(true);
-        }
-      });
+      }
+    });
     }
   }
 
@@ -255,6 +262,7 @@ export class InitialPage {
     const txCardConfirmarSenhaCadastro = document.getElementById("txCardConfirmarSenhaCadastro");
     const tbCardConfirmarSenhaCadastro = document.getElementById("tbCardConfirmarSenhaCadastro");
     const btCadastrarUsuario = document.getElementById("btCadastrarUsuario");
+    const btFecharPopUpCadastro = document.getElementById("btFecharPopUpCadastro");
 
 
     cardCadastroPessoaJuridica.style.setProperty('z-index', '1');
@@ -283,6 +291,7 @@ export class InitialPage {
     txCardConfirmarSenhaCadastro.style.setProperty('transition-delay', '0.6s');
     tbCardConfirmarSenhaCadastro.style.setProperty('transition-delay', '0.6s');
     btCadastrarUsuario.style.setProperty('transition-delay', '0.7s');
+    btFecharPopUpCadastro.style.setProperty('transition-delay', '0.7s');
 
 
     txCardNomeCadastro.style.setProperty('transition-duration', '0.5s');
@@ -304,6 +313,7 @@ export class InitialPage {
     txCardConfirmarSenhaCadastro.style.setProperty('transition-duration', '0.5s');
     tbCardConfirmarSenhaCadastro.style.setProperty('transition-duration', '0.5s');
     btCadastrarUsuario.style.setProperty('transition-duration', '0.5s');
+    btFecharPopUpCadastro.style.setProperty('transition-duration', '0.5s');
 
     txCardNomeCadastro.style.setProperty('visibility', 'visible');
     tbCardNomeCadastro.style.setProperty('visibility', 'visible');
@@ -324,6 +334,7 @@ export class InitialPage {
     txCardConfirmarSenhaCadastro.style.setProperty('visibility', 'visible');
     tbCardConfirmarSenhaCadastro.style.setProperty('visibility', 'visible');
     btCadastrarUsuario.style.setProperty('visibility', 'visible');
+    btFecharPopUpCadastro.style.setProperty('visibility', 'visible');
 
     txCardNomeCadastro.style.setProperty('opacity', '100%');
     tbCardNomeCadastro.style.setProperty('opacity', '100%');
@@ -344,6 +355,7 @@ export class InitialPage {
     txCardConfirmarSenhaCadastro.style.setProperty('opacity', '100%');
     tbCardConfirmarSenhaCadastro.style.setProperty('opacity', '100%');
     btCadastrarUsuario.style.setProperty('opacity', '100%');
+    btFecharPopUpCadastro.style.setProperty('opacity', '100%');
 
     await delay(1000);
 
@@ -358,6 +370,7 @@ export class InitialPage {
     txValidacaoLetrasM.style.setProperty('transition-delay', '0s');
     validacaoCaracEspeciais.style.setProperty('transition-delay', '0s');
     txValidacaoCaracEspeciais.style.setProperty('transition-delay', '0s');
+    btFecharPopUpCadastro.style.setProperty('transition-delay', '0s');
 
     validacaoDigitos.style.setProperty('transition-duration', '0s');
     txValidacaoDigitos.style.setProperty('transition-duration', '0s');
@@ -367,8 +380,7 @@ export class InitialPage {
     txValidacaoLetrasM.style.setProperty('transition-duration', '0s');
     validacaoCaracEspeciais.style.setProperty('transition-duration', '0s');
     txValidacaoCaracEspeciais.style.setProperty('transition-duration', '0s');
-
-
+    btFecharPopUpCadastro.style.setProperty('transition-duration', '0s');
   }
 
   cadastrarPessoaJuridica(){
@@ -520,9 +532,130 @@ export class InitialPage {
     }
   }
 
+  fecharPopUpCadastro(){
+
+    const txCardNomeCadastro = document.getElementById("txCardNomeCadastro");
+    const tbCardNomeCadastro = document.getElementById("tbCardNomeCadastro");
+    const txCardEmailCadastro = document.getElementById("txCardEmailCadastro");
+    const tbCardEmailCadastro = document.getElementById("tbCardEmailCadastro");
+    const txCardCNPJCadastro = document.getElementById("txCardCNPJCadastro");
+    const tbCardCNPJCadastro = document.getElementById("tbCardCNPJCadastro");
+    const txCardSenhaCadastro = document.getElementById("txCardSenhaCadastro");
+    const tbCardSenhaCadastro = document.getElementById("tbCardSenhaCadastro");
+    const validacaoDigitos = document.getElementById("validacaoDigitos");
+    const validacaoLetrasNumeros = document.getElementById("validacaoLetrasNumeros");
+    const validacaoLetrasM = document.getElementById("validacaoLetrasM");
+    const validacaoCaracEspeciais = document.getElementById("validacaoCaracEspeciais");
+    const txValidacaoDigitos = document.getElementById("txValidacaoDigitos");
+    const txValidacaoLetrasNumeros = document.getElementById("txValidacaoLetrasNumeros");
+    const txValidacaoLetrasM = document.getElementById("txValidacaoLetrasM");
+    const txValidacaoCaracEspeciais = document.getElementById("txValidacaoCaracEspeciais");
+    const txCardConfirmarSenhaCadastro = document.getElementById("txCardConfirmarSenhaCadastro");
+    const tbCardConfirmarSenhaCadastro = document.getElementById("tbCardConfirmarSenhaCadastro");
+    const btCadastrarUsuario = document.getElementById("btCadastrarUsuario");
+    const cardCadastro = document.getElementById("cardCadastro");
+    const subCardCadastro = document.getElementById("subCardCadastro");
+    const btFecharPopUpCadastro = document.getElementById("btFecharPopUpCadastro");
+
+    
+    txCardNomeCadastro.style.setProperty('transition-delay', '0s');
+    tbCardNomeCadastro.style.setProperty('transition-delay', '0s');
+    txCardEmailCadastro.style.setProperty('transition-delay', '0s');
+    tbCardEmailCadastro.style.setProperty('transition-delay', '0s');
+    txCardCNPJCadastro.style.setProperty('transition-delay', '0s');
+    tbCardCNPJCadastro.style.setProperty('transition-delay', '0s');
+    txCardSenhaCadastro.style.setProperty('transition-delay', '0s');
+    tbCardSenhaCadastro.style.setProperty('transition-delay', '0s');
+    validacaoDigitos.style.setProperty('transition-delay', '0s');
+    txValidacaoDigitos.style.setProperty('transition-delay', '0s');
+    validacaoLetrasNumeros.style.setProperty('transition-delay', '0s');
+    txValidacaoLetrasNumeros.style.setProperty('transition-delay', '0s');
+    validacaoLetrasM.style.setProperty('transition-delay', '0s');
+    txValidacaoLetrasM.style.setProperty('transition-delay', '0s');
+    validacaoCaracEspeciais.style.setProperty('transition-delay', '0s');
+    txValidacaoCaracEspeciais.style.setProperty('transition-delay', '0s');
+    txCardConfirmarSenhaCadastro.style.setProperty('transition-delay', '0s');
+    tbCardConfirmarSenhaCadastro.style.setProperty('transition-delay', '0s');
+    cardCadastro.style.setProperty('transition-delay', '0s');
+    subCardCadastro.style.setProperty('transition-delay', '0s');
+    btCadastrarUsuario.style.setProperty('transition-delay', '0s');
+    btFecharPopUpCadastro.style.setProperty('transition-delay', '0s');
+
+
+    txCardNomeCadastro.style.setProperty('transition-duration', '0s');
+    tbCardNomeCadastro.style.setProperty('transition-duration', '0s');
+    txCardEmailCadastro.style.setProperty('transition-duration', '0s');
+    tbCardEmailCadastro.style.setProperty('transition-duration', '0s');
+    txCardCNPJCadastro.style.setProperty('transition-duration', '0s');
+    tbCardCNPJCadastro.style.setProperty('transition-duration', '0s');
+    txCardSenhaCadastro.style.setProperty('transition-duration', '0s');
+    tbCardSenhaCadastro.style.setProperty('transition-duration', '0s');
+    validacaoDigitos.style.setProperty('transition-duration', '0s');
+    txValidacaoDigitos.style.setProperty('transition-duration', '0s');
+    validacaoLetrasNumeros.style.setProperty('transition-duration', '0s');
+    txValidacaoLetrasNumeros.style.setProperty('transition-duration', '0s');
+    validacaoLetrasM.style.setProperty('transition-duration', '0s');
+    txValidacaoLetrasM.style.setProperty('transition-duration', '0s');
+    validacaoCaracEspeciais.style.setProperty('transition-duration', '0s');
+    txValidacaoCaracEspeciais.style.setProperty('transition-duration', '0s');
+    txCardConfirmarSenhaCadastro.style.setProperty('transition-duration', '0s');
+    tbCardConfirmarSenhaCadastro.style.setProperty('transition-duration', '0s');
+    cardCadastro.style.setProperty('transition-duration', '0s');
+    subCardCadastro.style.setProperty('transition-duration', '0s');
+    btCadastrarUsuario.style.setProperty('transition-duration', '0s');
+    btFecharPopUpCadastro.style.setProperty('transition-duration', '0s');
+
+    txCardNomeCadastro.style.setProperty('visibility', 'hidden');
+    tbCardNomeCadastro.style.setProperty('visibility', 'hidden');
+    txCardEmailCadastro.style.setProperty('visibility', 'hidden');
+    tbCardEmailCadastro.style.setProperty('visibility', 'hidden');
+    txCardCNPJCadastro.style.setProperty('visibility', 'hidden');
+    tbCardCNPJCadastro.style.setProperty('visibility', 'hidden');
+    txCardSenhaCadastro.style.setProperty('visibility', 'hidden');
+    tbCardSenhaCadastro.style.setProperty('visibility', 'hidden');
+    validacaoDigitos.style.setProperty('visibility', 'hidden');
+    txValidacaoDigitos.style.setProperty('visibility', 'hidden');
+    validacaoLetrasNumeros.style.setProperty('visibility', 'hidden');
+    txValidacaoLetrasNumeros.style.setProperty('visibility', 'hidden');
+    validacaoLetrasM.style.setProperty('visibility', 'hidden');
+    txValidacaoLetrasM.style.setProperty('visibility', 'hidden');
+    validacaoCaracEspeciais.style.setProperty('visibility', 'hidden');
+    txValidacaoCaracEspeciais.style.setProperty('visibility', 'hidden');
+    txCardConfirmarSenhaCadastro.style.setProperty('visibility', 'hidden');
+    tbCardConfirmarSenhaCadastro.style.setProperty('visibility', 'hidden');
+    btCadastrarUsuario.style.setProperty('visibility', 'hidden');
+    cardCadastro.style.setProperty('visibility', 'hidden');
+    subCardCadastro.style.setProperty('visibility', 'hidden');
+    btFecharPopUpCadastro.style.setProperty('visibility', 'hidden');
+
+    txCardNomeCadastro.style.setProperty('opacity', '0%');
+    tbCardNomeCadastro.style.setProperty('opacity', '0%');
+    txCardEmailCadastro.style.setProperty('opacity', '0%');
+    tbCardEmailCadastro.style.setProperty('opacity', '0%');
+    txCardCNPJCadastro.style.setProperty('opacity', '0%');
+    tbCardCNPJCadastro.style.setProperty('opacity', '0%');
+    txCardSenhaCadastro.style.setProperty('opacity', '0%');
+    tbCardSenhaCadastro.style.setProperty('opacity', '0%');
+    validacaoDigitos.style.setProperty('opacity', '0%');
+    txValidacaoDigitos.style.setProperty('opacity', '0%');
+    validacaoLetrasNumeros.style.setProperty('opacity', '0%');
+    txValidacaoLetrasNumeros.style.setProperty('opacity', '0%');
+    validacaoLetrasM.style.setProperty('opacity', '0%');
+    txValidacaoLetrasM.style.setProperty('opacity', '0%');
+    validacaoCaracEspeciais.style.setProperty('opacity', '0%');
+    txValidacaoCaracEspeciais.style.setProperty('opacity', '0%');
+    txCardConfirmarSenhaCadastro.style.setProperty('opacity', '0%');
+    tbCardConfirmarSenhaCadastro.style.setProperty('opacity', '0%');
+    cardCadastro.style.setProperty('opacity', '0%');
+    subCardCadastro.style.setProperty('opacity', '0%');
+    btCadastrarUsuario.style.setProperty('opacity', '0%');
+    btFecharPopUpCadastro.style.setProperty('opacity', '0%');
+
+  }
 
 }
 
 function delay(ms: number) {
   return new Promise( resolve => setTimeout(resolve, ms) );
 }
+
