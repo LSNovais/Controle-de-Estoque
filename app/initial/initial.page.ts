@@ -7,10 +7,13 @@ import { RouterOutlet, Router, ActivationStart } from '@angular/router';
 //Firebase
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { getFirestore, collection, getDocs } from 'firebase/firestore/lite';
+import { collection, getDocs } from 'firebase/firestore/lite';
 
 //Firebase Auth
-import { getAuth, signInWithPopup, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signInWithRedirect, GoogleAuthProvider, getRedirectResult  } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signInWithRedirect, GoogleAuthProvider, getRedirectResult  } from "firebase/auth";
+
+//firestore
+import { doc, setDoc, getFirestore } from "firebase/firestore";
 
 
 const firebaseConfig = {
@@ -97,6 +100,20 @@ export class InitialPage implements OnInit {
     this.txEmailCadastroInvalido = "E-mail inválido!"
 
     const auth = getAuth();
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // User is signed in, see docs for a list of available properties
+        // https://firebase.google.com/docs/reference/js/firebase.User
+        const uid = user.uid;
+        // ...
+      } else {
+        // User is signed out
+        // ...
+      }
+    });
+
+
+
     getRedirectResult(auth)
     .then((result) => {
       // This gives you a Google Access Token. You can use it to access Google APIs.
@@ -105,8 +122,7 @@ export class InitialPage implements OnInit {
 
       // The signed-in user info.
       const user = result.user;
-      alert("Logou com sucesso! " + user);
-      // this.navCtrl.navigateRoot('./././tab1/tab1.page');
+      window.location.href = "/home/tabs/tab2?user="+user;
 
     }).catch((error) => {
       // Handle Errors here.
@@ -132,6 +148,28 @@ export class InitialPage implements OnInit {
 
     slider.style.setProperty('visibility', 'hidden');
     telaInicial.style.setProperty('visibility', 'visible');
+  }
+
+  openKeyboardCel(){
+    const telaInicial = document.getElementById("cardLogin");
+    const cardCadastro = document.getElementById("cardCadastro");
+    const subCardCadastro = document.getElementById("subCardCadastro");
+
+    telaInicial.style.setProperty('height', '180%');
+    cardCadastro.style.setProperty('height', '180%');
+    subCardCadastro.style.setProperty('height', '120%');
+
+  }
+
+  closeKeyboardCel(){
+    const telaInicial = document.getElementById("cardLogin");
+    const cardCadastro = document.getElementById("cardCadastro");
+    const subCardCadastro = document.getElementById("subCardCadastro");
+
+    telaInicial.style.setProperty('height', '100%');
+    cardCadastro.style.setProperty('height', '100%');
+    subCardCadastro.style.setProperty('height', '75%');
+
   }
 
   emailInvalido(invalido: boolean){
@@ -173,9 +211,27 @@ export class InitialPage implements OnInit {
     if( (this.validaNomeCadastro) && (this.validaEmailCadastro) && (this.validaCNPJCadastro) && (this.validaSenhaCadastro) && (this.validaConfirmSenhaCadastro) ){
       const auth = getAuth();
       createUserWithEmailAndPassword(auth, this.emailCadastro, this.senhaCadastro)
-      .then((userCredential) => {
+      .then(async (userCredential) => {
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
         const user = userCredential.user;
+        try {
+          const docRef = await setDoc(doc(db, "usuarios", this.emailCadastro), {
+            nome: this.nomeCadastro,
+            email: this.emailCadastro,
+            celular: null,
+            cpf: null,
+            dt_nascimento: null,
+            cnpj: this.CNPJCadastro,
+            sts_pessoa_fisica: 1,
+            perfil: 2
+          });
+          console.log("Document written with ID: ", docRef);
+        } catch (e) {
+          console.error("Error adding document: ", e);
+        }
         alert("Usuario criado! " + user);
+        this.fecharPopUpCadastro();
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -207,8 +263,8 @@ export class InitialPage implements OnInit {
     signInWithEmailAndPassword(auth, this.emailLogin, this.senhaLogin)
     .then((userCredential) => {
       const user = userCredential.user;
-      alert("Bem vindo! " + user.displayName);
-      window.location.href = "/home/tabs/tab2";
+      alert("Bem vindo! " + user);
+      window.location.href = "/home/tabs/tab2?user="+user;
     })
     .catch((error) => {
       const errorCode = error.code;
@@ -225,8 +281,6 @@ export class InitialPage implements OnInit {
 
   loginWithGoogle(){
     const auth = getAuth();
-    provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
-    auth.languageCode = 'it';
     signInWithRedirect(auth, provider);
   }
 
@@ -389,6 +443,7 @@ export class InitialPage implements OnInit {
   }
 
   perdaFocoNomeCad(){
+    this.closeKeyboardCel();
     const regex = /^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$/;
     const txCardNomeCadastroInvalido = document.getElementById("txCardNomeCadastroInvalido");
     const tbCardNomeCadastro = document.getElementById("tbCardNomeCadastro");
@@ -407,6 +462,7 @@ export class InitialPage implements OnInit {
   }
 
   perdaFocoEmailCad(){
+    this.closeKeyboardCel();
     const txCardEmailCadastroInvalido = document.getElementById("txCardEmailCadastroInvalido");
     const tbCardEmailCadastro = document.getElementById("tbCardEmailCadastro");
 
@@ -424,6 +480,7 @@ export class InitialPage implements OnInit {
   }
 
   perdaFocoCNPJCad(){
+    this.closeKeyboardCel();
     const txCardCNPJCadastroInvalido = document.getElementById("txCardCNPJCadastroInvalido");
     const tbCardCNPJCadastro = document.getElementById("tbCardCNPJCadastro");
 
@@ -502,6 +559,7 @@ export class InitialPage implements OnInit {
   }
 
   perdaFocoSenhaCad(){
+    this.closeKeyboardCel();
     const validacaoDigitos = document.getElementById("txValidacaoDigitos");
     const validacaoLetrasNumeros = document.getElementById("txValidacaoLetrasNumeros");
     const validacaoLetrasM = document.getElementById("txValidacaoLetrasM");
@@ -516,6 +574,7 @@ export class InitialPage implements OnInit {
   }
 
   perdaFocoConfirSenhaCad(){
+    this.closeKeyboardCel();
     const txCardConfirmarSenhaCadastroInvalida = document.getElementById("txCardConfirmarSenhaCadastroInvalida");
     const tbCardConfirmarSenhaCadastro = document.getElementById("tbCardConfirmarSenhaCadastro");
 

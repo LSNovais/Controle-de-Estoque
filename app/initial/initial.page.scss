@@ -1,3 +1,5 @@
+
+
 .cardSlider{
     visibility: visible;
 }
@@ -87,10 +89,13 @@ b{
 .cardLogin{
     visibility: hidden;
     position: fixed;
+    overflow-x: hidden;
+    overflow-y: auto;
     top: 0%;
     left: 0%;
     width: 100%;
     height: 100%;
+    min-height: 85vh;
     background-image: url("../../assets/PlanoFundo.jpg");
     filter: blur(0px);
     z-index: 1;
@@ -195,18 +200,26 @@ b{
 
 .btCadastrar{
     position: fixed;
-    top: 69%;
+    top: 69.5%;
     left: 28%;
     width: 55%;    
     z-index: 10;
     color: #afafaf;
     font-size: 70%;
-
+}
+.btRecuperarSenha{
+    position: fixed;
+    top: 72.5%;
+    left: 38%;
+    width: 55%;    
+    z-index: 10;
+    color: #afafaf;
+    font-size: 70%;
 }
 
 .divSeparadorLogin{
     position: fixed;
-    top: 73%;
+    top: 77%;
     left: 20%;
     width: 62%;
     height: 0.2%;
@@ -215,7 +228,7 @@ b{
 
 .txOu{
     position: fixed;
-    top: 69.4%;
+    top: 73.4%;
     left: 45%;
     width: 10%;
     color: black;
@@ -236,7 +249,7 @@ $button-active-blue: #1669F2;
 
 .google-btn {
     position: fixed;
-  top: 78%;
+  top: 82%;
   left: 21%;
   width: 60%;
   height: 6.1%;
@@ -248,13 +261,13 @@ $button-active-blue: #1669F2;
     margin-top: 0%;
     margin-left: 0%;
     width: 40px;
-    height: 40px;
+    height: 100%;
     border-radius: 2px;
     background-color: $white;
   }
   .google-icon {
     position: absolute;
-    margin-top: 25%;
+    margin-top: 28%;
     margin-left: 25%;
     width: 18px;
     height: 18px;
@@ -289,7 +302,7 @@ $button-active-blue: #1669F2;
 
 .facebook-btn {
     position: fixed;
-  top: 86%;
+  top: 90%;
   left: 21%;
   width: 60%;
   height: 6.1%;
