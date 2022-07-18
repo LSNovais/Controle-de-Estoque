@@ -1,5 +1,4 @@
 import { IonicModule } from '@ionic/angular';
-import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -16,11 +15,12 @@ import { Tab2PageRoutingModule } from './tab2-routing.module';
     ExploreContainerComponentModule,
     Tab2PageRoutingModule
   ],
-  providers: [ BarcodeScanner ],
+  providers: [],
   declarations: [Tab2Page]
 })
 
 
 export class Tab2PageModule {
-  constructor(private barcodeScanner: BarcodeScanner) { }
+
+  constructor() {}
 }

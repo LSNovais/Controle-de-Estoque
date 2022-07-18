@@ -13,7 +13,24 @@ const routes: Routes = [
   {
     path: '',
     loadChildren: () => import('./initial/initial.module').then( m => m.InitialPageModule)
+  },
+  {
+    path: 'cadastro',
+    loadChildren: () => import('./cadastro/cadastro.module').then( m => m.CadastroPageModule)
+  },
+  {
+    path: 'recuperar-senha',
+    loadChildren: () => import('./recuperar-senha/recuperar-senha.module').then( m => m.RecuperarSenhaPageModule)
+  },
+  {
+    path: 'cadastro-realizado',
+    loadChildren: () => import('./cadastro-realizado/cadastro-realizado.module').then( m => m.CadastroRealizadoPageModule)
+  },  {
+    path: 'produtos',
+    loadChildren: () => import('./produtos/produtos.module').then( m => m.ProdutosPageModule)
   }
+
+
 ];
 @NgModule({
   imports: [

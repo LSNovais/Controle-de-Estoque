@@ -1,60 +1,28 @@
 import { Component, AfterViewInit, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { NavController, NavParams } from '@ionic/angular';
-import { TabsPage } from '../tabs/tabs.page';
-import { IonSlides} from '@ionic/angular';
-
-//Graficos
-import Chart from 'chart.js/auto';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
+import { ModalController} from '@ionic/angular';  
 
 
 @Component({
   selector: 'app-tab3',
   templateUrl: 'tab3.page.html',
+  providers: [ BarcodeScanner ],
   styleUrls: ['tab3.page.scss']
 })
 
 //Declaração da classe
-export class Tab3Page implements AfterViewInit{
-  @ViewChild('lineCanvas') private lineCanvas: ElementRef;
+export class Tab3Page{
 
-  lineChart: any;
+  constructor(private barcodeScanner: BarcodeScanner, public modalCtrl: ModalController) { }
 
-  constructor() { }
-
-  ngAfterViewInit() {
-    this.lineChartMethod();
+  ngOnInit() {
   }
 
-  lineChartMethod() {
-    this.lineChart = new Chart(this.lineCanvas.nativeElement, {
-      type: 'line',
-      data: {
-        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'November', 'December'],
-        datasets: [
-          {
-            label: 'Sell per week',
-            fill: false,
-            //lineTension: 0.1,
-            backgroundColor: 'rgba(75,192,192,0.4)',
-            borderColor: 'rgba(75,192,192,1)',
-            borderCapStyle: 'butt',
-            borderDash: [],
-            borderDashOffset: 0.0,
-            borderJoinStyle: 'miter',
-            pointBorderColor: 'rgba(75,192,192,1)',
-            pointBackgroundColor: '#fff',
-            pointBorderWidth: 1,
-            pointHoverRadius: 5,
-            pointHoverBackgroundColor: 'rgba(75,192,192,1)',
-            pointHoverBorderColor: 'rgba(220,220,220,1)',
-            pointHoverBorderWidth: 2,
-            pointRadius: 1,
-            pointHitRadius: 10,
-            data: [65, 59, 80, 81, 56, 55, 40, 10, 5, 50, 10, 15],
-            spanGaps: false,
-          }
-        ]
-      }
-    });
+  scan(){
+    this.barcodeScanner.scan().then((barcodeData)=>{
+      alert("barcode data = "+barcodeData.text);
+    },(err)=>{
+      alert(JSON.stringify(err));
+    })
   }
 }
