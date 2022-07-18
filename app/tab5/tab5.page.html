@@ -1,0 +1,398 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Configurações</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-list>
+    <ion-list-header>
+      <ion-text color="primary">Conta</ion-text>
+    </ion-list-header>
+    <ion-item lines="none" id="open-modal-perfil">
+      <ion-label>Perfil</ion-label>
+      <ion-icon name="person" slot="end"></ion-icon>
+    </ion-item>
+    <ion-item lines="none" id="open-modal-enterprise">
+      <ion-label>Empresa</ion-label>
+      <ion-icon name="people" slot="end"></ion-icon>
+    </ion-item>
+    <ion-item lines="none" id="open-modal-data">
+      <ion-label>Dados</ion-label>
+      <ion-icon name="stats-chart" slot="end"></ion-icon>
+    </ion-item>
+    <br>
+    <ion-list-header>
+      <ion-text color="primary">Aplicativo</ion-text>
+    </ion-list-header>
+    <ion-item lines="none" id="open-modal-help">
+      <ion-label>Ajuda</ion-label>
+      <ion-icon name="help" slot="end"></ion-icon>
+    </ion-item>
+    <ion-item lines="none" id="open-modal-about">
+      <ion-label>Sobre</ion-label>
+      <ion-icon name="information" slot="end"></ion-icon>
+    </ion-item>
+    <ion-item lines="none" id="open-modal-report">
+      <ion-label>Reportar Problema</ion-label>
+      <ion-icon name="warning" slot="end"></ion-icon>
+    </ion-item>
+    <ion-item lines="none">
+      <ion-label>Modo Escuro</ion-label>
+      <ion-toggle slot="end"></ion-toggle>
+    </ion-item>
+  </ion-list>
+
+  <ion-grid>
+    <ion-row>
+      <br>
+      <ion-col size="14" offset="-1">
+        <ion-button expand="full" fill="none" class="btSair" (click)="sairConta()">Sair</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-modal #perfil trigger="open-modal-perfil" [presentingElement]="presentingElement">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Perfil</ion-title>
+          <ion-buttons slot="end">
+            <ion-button color="danger" (click)="perfil.dismiss()">Fechar</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <ion-grid>
+          <ion-row>
+            <ion-col size="30" offset="3">
+              <br>
+              <ion-avatar>
+                <img src="../../assets/fotoPerfil.jpg" (click)="pegarImagem()">
+              </ion-avatar>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="15" offset="3.2">
+              <ion-text><h6>{{nomeUsuario}} <ion-icon name="create"></ion-icon></h6></ion-text>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+        <ion-list>
+          <ion-item>
+            <ion-label>
+              <p><ion-text color="primary">E-mail</ion-text></p>
+              <ion-input [(ngModel)]="emailUsuario"></ion-input>
+            </ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label>
+              <p><ion-text color="primary">CPF</ion-text></p>
+              <ion-input [(ngModel)]="cpfUsuario"></ion-input>
+            </ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label>
+              <p><ion-text color="primary">Sexo</ion-text></p>
+              <ion-input [(ngModel)]="sexoUsuario"></ion-input>
+            </ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label>
+              <p><ion-text color="primary">Data Nascimento</ion-text></p>
+              <ion-input [(ngModel)]="dataNascimentoUsuario"></ion-input>
+            </ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label>
+              <p><ion-text color="primary">Celular</ion-text></p>
+              <ion-input [(ngModel)]="celularUsuario"></ion-input>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <ion-button expand="full" (click)="salvarPerfil()">Salvar</ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
+  <ion-modal #enterprise trigger="open-modal-enterprise" [presentingElement]="presentingElement">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Empresa</ion-title>
+          <ion-buttons slot="end">
+            <ion-button color="danger" (click)="enterprise.dismiss()">Fechar</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <ion-list>
+          <ion-item lines="none">
+            <ion-label>Sincronizar dados da empresa</ion-label>
+            <ion-toggle slot="end" [(ngModel)]="sincDadosEmpresa" (ionChange)="ativarSincEmpresa()"></ion-toggle>
+          </ion-item>
+        </ion-list>
+        <ion-grid id="gridEmpresa" class="gridEmpresa">
+          <ion-row>
+            <ion-col size="30" offset="3">
+              <br>
+              <ion-avatar>
+                <img src="../../assets/fotoEmpresa.jpeg" (click)="pegarImagem()">
+              </ion-avatar>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+        <ion-list id="listEmpresa" class="listEmpresa">
+          <ion-item>
+            <ion-label>
+              <p><ion-text color="primary">Nome Empresa</ion-text></p>
+              <ion-input [(ngModel)]="nomeEmpresa" [readonly]="editarDados()"></ion-input>
+            </ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label>
+              <p><ion-text color="primary">CNPJ</ion-text></p>
+              <ion-input [(ngModel)]="cnpjEmpresa" [readonly]="editarDados()"></ion-input>
+            </ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label>
+              <p><ion-text color="primary">E-mail Empresa</ion-text></p>
+              <ion-input [(ngModel)]="emailEmpresa" [readonly]="editarDados()"></ion-input>
+            </ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label>
+              <p><ion-text color="primary">Contato</ion-text></p>
+              <ion-input [(ngModel)]="contatoEmpresa" [readonly]="editarDados()"></ion-input>
+            </ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label>
+              <p><ion-text color="primary">Código Único Empresa</ion-text></p>
+              <ion-input [(ngModel)]="codEmpresa" [readonly]="true"></ion-input>
+            </ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label>
+              <p><ion-text color="primary">Posição</ion-text></p>
+              <ion-input [(ngModel)]="posicaoUsuarioEmpr" [readonly]=true></ion-input>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <ion-button expand="full" (click)="salvarEmpresa()"  id="salvarEmpresa" class="salvarEmpresa" [disabled]="usuarioCriador()">{{btSalvarEditarEmpresa}}</ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
+  <ion-modal #data trigger="open-modal-data" [presentingElement]="presentingElement">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Dados</ion-title>
+          <ion-buttons slot="end">
+            <ion-button color="danger" (click)="data.dismiss()">Fechar</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <ion-grid>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <ion-row>
+            <ion-col>
+              <ion-button expand="full" size="medium" color="danger" (click)="excluirDadosConta()">Excluir dados da conta</ion-button>
+            </ion-col>
+          </ion-row>
+          <br>
+          <ion-row>
+            <ion-col>
+              <ion-button expand="full" fill="outline" color="danger">Excluir conta</ion-button>
+            </ion-col>
+          </ion-row>
+          <br>
+          <ion-row>
+            <ion-col>
+              <ion-button expand="full" size="medium" color="danger">Excluir dados da empresa</ion-button>
+            </ion-col>
+          </ion-row>
+          <br>
+          <ion-row>
+            <ion-col>
+              <ion-button expand="full" fill="outline" color="danger">Excluir empresa</ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
+  <ion-modal #help trigger="open-modal-help" [presentingElement]="presentingElement">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Ajuda</ion-title>
+          <ion-buttons slot="end">
+            <ion-button color="danger" (click)="help.dismiss()">cancelar</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <ion-grid>
+          <ion-row>
+            <br>
+            <ion-col size="10">
+              <ion-text color="primary">E-mail para contato</ion-text>
+              <ion-input placeholder="Nome@dominio.com"></ion-input>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <br>
+            <ion-col size="10">
+              <ion-text color="primary">Assunto</ion-text>
+              <ion-input placeholder="Problema ocorrido"></ion-input>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <br>
+            <ion-col size="10">
+              <ion-text color="primary">Dúvida</ion-text>
+              <ion-select placeholder="Selecione o tipo de dúvida" (ionChange)="pegarDuvidaSelecionado($event)">
+                <ion-select-option *ngFor="let selectDuvida of selectDuvidas" [value]="selectDuvida">{{ selectDuvida.duvida }}</ion-select-option>
+              </ion-select>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <br>
+            <ion-col size="12">
+              <ion-text color="primary">Detalhes do ocorrido</ion-text>
+              <ion-textarea  rows="14" cols="30" placeholder="Entre com mais informações aqui..."></ion-textarea>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <br>
+            <ion-col size="14" offset="-1">
+              <ion-button expand="full">Enviar</ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
+  <ion-modal #about trigger="open-modal-about" [presentingElement]="presentingElement">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Sobre</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="about.dismiss()">Fechar</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <ion-list>
+          <ion-item>
+            <ion-label>
+              <h2>Connor Smith</h2>
+              <p>Sales Rep</p>
+            </ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label>
+              <h2>Daniel Smith</h2>
+              <p>Product Designer</p>
+            </ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label>
+              <h2>Greg Smith</h2>
+              <p>Director of Operations</p>
+            </ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label>
+              <h2>Zoey Smith</h2>
+              <p>CEO</p>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
+  <ion-modal #report trigger="open-modal-report" [presentingElement]="presentingElement">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Reportar Problema<ion-icon name="warning" slot="end"></ion-icon></ion-title>
+          <ion-buttons slot="end">
+            <ion-button color="danger" (click)="report.dismiss()">cancelar</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <ion-grid>
+          <ion-row>
+            <br>
+            <ion-col size="10">
+              <ion-text color="primary">E-mail para contato</ion-text>
+              <ion-input placeholder="Nome@dominio.com"></ion-input>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <br>
+            <ion-col size="10">
+              <ion-text color="primary">Assunto</ion-text>
+              <ion-input placeholder="Problema ocorrido"></ion-input>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <br>
+            <ion-col size="10">
+              <ion-text color="primary">Problema</ion-text>
+              <ion-select placeholder="Selecione o problema" (ionChange)="pegarReportSelecionado($event)">
+                <ion-select-option *ngFor="let selectReport of selectReports" [value]="selectReport">{{ selectReport.falha }}</ion-select-option>
+              </ion-select>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <br>
+            <ion-col size="12">
+              <ion-text color="primary">Detalhes do ocorrido</ion-text>
+              <ion-textarea  rows="14" cols="30" placeholder="Entre com mais informações aqui..."></ion-textarea>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <br>
+            <ion-col size="14" offset="-1">
+              <ion-button expand="full">Enviar</ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
+</ion-content>
+
+
+

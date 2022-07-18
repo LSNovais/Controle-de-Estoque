@@ -18,6 +18,11 @@ import { getFirestore, collection, getDocs } from 'firebase/firestore/lite';
 //Graficos
 import { Chart } from 'chart.js';
 
+import { IonicStorageModule } from '@ionic/storage-angular';
+
+import { Storage } from '@ionic/storage';
+import { ImagePicker } from '@awesome-cordova-plugins/image-picker';
+
 const firebaseConfig = {
   apiKey: "AIzaSyBdP5R92n_M3OdyukinRkd9Wwomx5_gHNc",
   authDomain: "controle-de-estoque-be864.firebaseapp.com",
@@ -44,10 +49,14 @@ async function getCities(db) {
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule],
+  imports: [BrowserModule, IonicModule.forRoot(), IonicStorageModule.forRoot(), AppRoutingModule],
   providers: [ BarcodeScanner],
   bootstrap: [AppComponent]
 })
 export class AppModule {
-  
+  constructor(private storage: Storage) { }
+
+  async ngOnInit() {
+    await this.storage.create();
+  }
 }
