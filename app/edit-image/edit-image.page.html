@@ -1,0 +1,68 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>{{tituloPage}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <image-cropper
+  [imageChangedEvent]="imageChangedEvent"
+  [maintainAspectRatio]="true"
+  [aspectRatio]="3 / 3"
+  format="jpeg"
+  (imageCropped)="imageCropped($event)"
+  (cropperReady)="cropperReady()"
+  (loadImageFailed)="loadImageFailed()"
+  [imageQuality]="20"
+  [roundCropper]="true"></image-cropper>  
+
+  <ion-list>
+    <ion-item lines="none">
+      <ion-label style="font-size: 80%"><b>Visualização no histórico:</b></ion-label>
+    </ion-item>
+    <ion-item>
+        <ion-avatar slot="start">
+          <img [src]="croppedImage"/>
+        </ion-avatar>
+        <ion-label>
+          <h2><ion-text color="primary">{{tituloHistorico}}</ion-text></h2>
+          <p>Cadastrou o produto Linguiça Calabresa.</p>
+        </ion-label>
+    </ion-item>
+    <ion-item lines="none">
+    </ion-item>
+  </ion-list>
+  <ion-grid>
+    <ion-row>
+    </ion-row>
+    <ion-row>
+      <ion-col offset="0">
+        <ion-button expand="full" style="--color: #000; --background: #f4f5f8" (click)="alterarFoto()">Alterar Foto</ion-button>
+        <input id='selecao-arquivo' type='file' (change)="fileChangeEvent($event)" #uploader>
+        <ion-button expand="full" color="primary" (click)="salvarImage()">Salvar Foto</ion-button>
+      </ion-col>
+      <ion-col offset="4.3">
+        <ion-button size="small" fill="none" (click)="cancelarFoto()" class="btCancelar">Cancelar</ion-button>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col offset="0">
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col offset="4">
+      </ion-col>
+    </ion-row>
+
+  </ion-grid>
+
+
+</ion-content>
+
+<script>
+  var modal = document.querySelector('ion-modal');
+
+  function dismiss() {
+    modal.dismiss();
+  }
+</script>

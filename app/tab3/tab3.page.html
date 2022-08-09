@@ -1,5 +1,31 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Consulta Produto</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
 <ion-content>
-
-  <ion-button (click)="scan()">scan</ion-button>
-
+  <ion-grid>
+    <ion-row>
+      <ion-col offset="1" size="10" style="margin-top:65%;" class="consultaProduto">
+        <ion-item>
+          <ion-input placeholder="Cód. Barras ou Nome Produto" id="tbConsultaProduto" [(ngModel)]="codProduto"></ion-input>
+          <ion-icon name="search-outline" slot="start" (click)="consultarProduto()" color="primary"></ion-icon>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col offset="1" size="10">
+        <ion-button expand="full" color="primary" (click)="consultarProduto()">Consultar</ion-button>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-buttons hidden>
+          <ion-button color="danger" (click)="consultarProduto()">Cancelar</ion-button>
+        </ion-buttons>      
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

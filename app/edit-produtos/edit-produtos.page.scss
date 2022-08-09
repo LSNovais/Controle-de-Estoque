@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300&display=swap');
+
+p{
+    font-size: 70%;
+}
+
+
+ion-input{
+    width: 85%;
+    font-size: 80%;
+    border-style: solid;
+    border-color: rgba(167, 167, 167, 0.5);
+    border-radius: 5px;
+}
+
+ion-select{
+    width: 50%;
+    font-size: 80%;
+    border-style: solid;
+    border-color: rgba(167, 167, 167, 0.5);
+    border-radius: 5px;
+}
+
+
+.tbPesoProduto, .tbPrecoProduto{
+    width: 50%;
+}
+
+.custom-options-peso{
+    margin-top: -11.5%;
+    width: 15%;
+    left: 34.3%;
+    border-color: transparent;
+
+}
+
+ion-button{
+    font-size: 70%;
+}
+
+.btCancelar{
+    color: red;
+}

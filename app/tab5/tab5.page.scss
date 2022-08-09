@@ -5,11 +5,57 @@
     color: #3880ff;
 }
 
-ion-avatar{
-    width: 20%;
-    min-height:50vmin;
+/* Esconde o input */
+input[type='file'] {
+    display: none
+  }
+  
+  /* Aparência que terá o seletor de arquivo */
+
+ion-badge{
+    position: relative;
+    margin-left: 75%;
+    width: 15%;
+    top: -20%;
+    border-radius: 50%;
+    background-color: rgb(167, 167, 167);
 }
 
+.iconCamera{
+    margin-top: 20%;
+}
+
+
+.imagePerfil{
+    width: 20%;
+    min-height:48vmin;
+    border-style: solid;
+    border-color: rgba(167, 167, 167, 0.5);
+    border-width: 3px;
+}
+
+.imageEmpresa{
+    margin-top: -4%;
+    width: 22%;
+    min-height:53vmin;
+    border-style: solid;
+    border-color: transparent;
+    border-width: 3px;
+
+}
+
+.badgeCameraEmpresa{
+    visibility: hidden;
+}
+
+.iconCameraEmpresa{
+    margin-top: 20%;
+    visibility: hidden;
+}
+
+.arquivo {
+    display: none;
+  }
 .gridEmpresa{
     visibility: hidden;
 }

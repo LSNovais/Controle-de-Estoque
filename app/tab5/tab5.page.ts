@@ -1,4 +1,6 @@
 import { Component, OnInit, Injectable, NgModule } from '@angular/core';
+import { Camera, CameraResultType } from '@capacitor/camera';
+import { EditImagePage } from '../edit-image/edit-image.page'
 
 //Firebase
 import { initializeApp } from "firebase/app";
@@ -9,17 +11,24 @@ import { collection, getDocs } from 'firebase/firestore/lite';
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signInWithRedirect, GoogleAuthProvider, getRedirectResult, signOut  } from "firebase/auth";
 
 //firestore
-import { doc, setDoc, getFirestore, query, where } from "firebase/firestore";
+import { doc, setDoc, getFirestore, query, where, limitToLast } from "firebase/firestore";
 import { ActivatedRoute, Router } from '@angular/router';
 
 //Local database
-import { IonicStorageModule } from '@ionic/storage-angular';
 import { Storage } from '@ionic/storage-angular';
 
 import { AlertController } from '@ionic/angular';
 import { ModalController} from '@ionic/angular';  
 import { ToastController } from '@ionic/angular';
 
+import { enableProdMode } from '@angular/core';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+
+import { defineCustomElements } from '@ionic/pwa-elements/loader';
+import { environment } from 'src/environments/environment';
+import { AppModule } from '../app.module';
+
+import { ImageCroppedEvent, LoadedImage } from 'ngx-image-cropper';
 
 const auth = getAuth();
 
@@ -39,7 +48,6 @@ const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const db = getFirestore(app);
  
-
 @Component({
   selector: 'app-tab5',
   templateUrl: './tab5.page.html',
@@ -53,6 +61,8 @@ export class Tab5Page implements OnInit {
   public dataNascimentoUsuario:string;
   public celularUsuario:number;
   public posicaoUsuarioEmpr:string;
+  public urlFotoPerfil:string;
+  public imagePerfil;
 
   public sincDadosEmpresa:boolean;
   public emailUsuarioCriador:string;
@@ -68,6 +78,7 @@ export class Tab5Page implements OnInit {
   public emailEmpresa:string;
   public contatoEmpresa:string;
   public selectEmpresa = [];
+  public imageEmpresa;
 
   public selectReports = [];
   public selectDuvidas = [];
@@ -81,6 +92,7 @@ export class Tab5Page implements OnInit {
 
   constructor(public router: Router, private storage: Storage, private alertController: AlertController, public modalCtrl: ModalController, public toastController: ToastController){
   }
+
   async ngOnInit() {
     const user = auth.currentUser;
 
@@ -94,6 +106,83 @@ export class Tab5Page implements OnInit {
       });
     }
   }
+
+  async fileChangeEvent(event: any): Promise<void> {
+    
+    let profileModal = this.modalCtrl.create({
+      component: EditImagePage,
+      componentProps: { img: event,
+                        type: "perfil",
+                        nome:  this.nomeUsuario}
+    });
+    // let profileModal = this.modalCtrl.create(EditImagePage, { userId: 8675309 });
+    this.modalCtrl.dismiss();
+    await (await profileModal).present();
+
+    const { data, role } = await (await profileModal).onWillDismiss();
+    if (role === 'alterarImage') {
+      this.imagePerfil = data;
+      try {
+        const docRef = await setDoc(doc(db, "usuarios", this.emailUsuario), {
+          email: this.emailUsuario,
+          nome: this.nomeUsuario,
+          celular: this.celularUsuario,
+          cpf: this.cpfUsuario,
+          dt_nascimento: this.dataNascimentoUsuario,
+          sexo: this.sexoUsuario,
+          cod_empresa: this.codEmpresa,
+          img_perfil: this.imagePerfil,
+          sts_ativo: true
+        });
+        this.modalCtrl.dismiss();
+        this.presentToastWithOptions("Perfil atualizado com sucesso!", true);
+        console.log("Document written with ID: ", docRef);
+      } catch (e) {
+        this.presentToastWithOptions("Falha ao atualizar perfil!", false);
+        console.error("Error adding document: ", e);
+      }
+    }
+  }
+
+  async fileChangeEventEmpresa(event: any): Promise<void> {
+    
+    let profileModal = this.modalCtrl.create({
+      component: EditImagePage,
+      componentProps: { img: event,
+                        type: "empresa",
+                        nome:  this.nomeEmpresa}
+    });
+    // let profileModal = this.modalCtrl.create(EditImagePage, { userId: 8675309 });
+    this.modalCtrl.dismiss();
+    await (await profileModal).present();
+
+    const { data, role } = await (await profileModal).onWillDismiss();
+    if (role === 'alterarImage') {
+      this.imageEmpresa = data;
+      try {
+        const docRef = await setDoc(doc(db, "empresas", this.nomeEmpresa), {
+          email: this.emailEmpresa,
+          nome_empresa: this.nomeEmpresa,
+          contato: this.contatoEmpresa,
+          cnpj: this.cnpjEmpresa,
+          cod_unico: this.codEmpresa,
+          criador: this.emailUsuario,
+          img_empresa: this.imageEmpresa,
+          sts_ativo: true
+        });
+        console.log("Document written with ID: ", docRef);
+        this.presentToastWithOptions("Imagem da empresa atualizada!",true);
+        this.btSalvarEditarEmpresa = "Editar Dados";
+        this.editarDadosEmpresa = false;
+        this.modalCtrl.dismiss();
+      } catch (e) {
+        console.error("Error adding document: ", e);
+        this.presentToastWithOptions("Falha ao atualizar imagem da empresa!",false);
+      }
+    }
+  }
+
+
 
   async presentToastWithOptions(message:string, stsSucesso:boolean) {
     var cor;
@@ -126,32 +215,6 @@ export class Tab5Page implements OnInit {
     });
   }
 
-
-  options = {
-    // Android only. Max images to be selected, defaults to 15. If this is set to 1, upon
-    // selection of a single image, the plugin will return it.
-    maximumImagesCount:1,
-    
-    // max width and height to allow the images to be.  Will keep aspect
-    // ratio no matter what.  So if both are 800, the returned image
-    // will be at most 800 pixels wide and 800 pixels tall.  If the width is
-    // 800 and height 0 the image will be 800 pixels wide if the source
-    // is at least that wide.
-    width: 30,
-    height: 30,
-    
-    // quality of resized image, defaults to 100
-    quality: 100,
-
-    // output type, defaults to FILE_URIs.
-    // available options are 
-    // window.imagePicker.OutputType.FILE_URI (0) or 
-    // window.imagePicker.OutputType.BASE64_STRING (1)
-    outputType: 1
-};
-
-
-
   // Inicio Aba Perfil
   async consultaPerfil(){
     this.selectEmpresa[0] = null;
@@ -170,6 +233,7 @@ export class Tab5Page implements OnInit {
     this.dataNascimentoUsuario = this.selectPerfil[0].dt_nascimento;
     this.celularUsuario = this.selectPerfil[0].celular;
     this.codEmpresa = this.selectPerfil[0].cod_empresa;
+    this.imagePerfil = this.selectPerfil[0].img_perfil;
 
     //Empresa
     if( this.codEmpresa !== null ){
@@ -187,6 +251,7 @@ export class Tab5Page implements OnInit {
         this.cnpjEmpresa = this.selectEmpresa[0].cnpj;
         this.emailEmpresa  = this.selectEmpresa[0].email;
         this.contatoEmpresa  = this.selectEmpresa[0].contato;
+        this.imageEmpresa  = this.selectEmpresa[0].img_empresa;
         this.emailUsuarioCriador = this.selectEmpresa[0].criador;
         if( this.emailUsuarioCriador == this.emailUsuario ){
           this.posicaoUsuarioEmpr = "Administrador";
@@ -203,6 +268,14 @@ export class Tab5Page implements OnInit {
         gridEmpresa.style.setProperty('visibility', 'visible');
         listEmpresa.style.setProperty('visibility', 'visible');
         salvarEmpresa.style.setProperty('visibility', 'visible');
+
+
+        if( this.urlFotoPerfil !== null ){
+          const img = document.getElementById('imgPerfilUsuario');
+          img.setAttribute('src',this.urlFotoPerfil);
+        } 
+
+
       }else{
         // alert("Empresa não encontrada!");
       }
@@ -221,7 +294,9 @@ export class Tab5Page implements OnInit {
         cpf: this.cpfUsuario,
         dt_nascimento: this.dataNascimentoUsuario,
         sexo: this.sexoUsuario,
-        cod_empresa: this.codEmpresa
+        cod_empresa: this.codEmpresa,
+        img_perfil: this.imagePerfil,
+        sts_ativo: true
       });
       this.modalCtrl.dismiss();
       this.presentToastWithOptions("Perfil atualizado com sucesso!", true);
@@ -231,24 +306,36 @@ export class Tab5Page implements OnInit {
       console.error("Error adding document: ", e);
     }
   }
+
+
   // Fim Aba Perfil
 
 
 
   // Inicio Aba Empresa
+  getRandomIntInclusive(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1) + min);
+  }
+  
+  
   async salvarEmpresa(){
     if(this.editarDadosEmpresa && this.isUsuarioCriador){
       if(this.isCadastroNovaEmpresa){
+        this.codEmpresa = this.nomeEmpresa.replace(/ /g, "").toLowerCase()+"#"+this.getRandomIntInclusive(100,999).toString();
         try {
           const docRef = await setDoc(doc(db, "empresas", this.nomeEmpresa), {
             email: this.emailEmpresa,
             nome_empresa: this.nomeEmpresa,
             contato: this.contatoEmpresa,
             cnpj: this.cnpjEmpresa,
-            cod_unico: this.nomeEmpresa+"#232",
+            cod_unico: this.codEmpresa,
             criador: this.emailUsuario,
+            img_empresa: this.imageEmpresa,
             sts_ativo: true
           });
+          this.salvarPerfil();
           console.log("Document written with ID: ", docRef);
           this.btSalvarEditarEmpresa = "Editar Dados";
           this.editarDadosEmpresa = false;
@@ -267,6 +354,7 @@ export class Tab5Page implements OnInit {
             cnpj: this.cnpjEmpresa,
             cod_unico: this.codEmpresa,
             criador: this.emailUsuarioCriador,
+            img_empresa: this.imageEmpresa,
             sts_ativo: true
           });
           console.log("Document written with ID: ", docRef);
@@ -332,6 +420,7 @@ export class Tab5Page implements OnInit {
           dt_nascimento: this.dataNascimentoUsuario,
           sexo: this.sexoUsuario,
           cod_empresa: null,
+          img_perfil: this.imagePerfil,
           sts_ativo: true
         });
 
@@ -377,6 +466,14 @@ export class Tab5Page implements OnInit {
       return true;
     }else{
       this.btSalvarEditarEmpresa = "Salvar";
+      const iconCameraEmpresa = document.getElementById("iconCameraEmpresa");
+      const badgeCameraEmpresa = document.getElementById("badgeCameraEmpresa");
+      const imageEmpresa = document.getElementById("imageEmpresa");
+
+      iconCameraEmpresa.style.setProperty('visibility', 'visible');
+      badgeCameraEmpresa.style.setProperty('visibility', 'visible');
+      imageEmpresa.style.setProperty('border-color', 'rgba(167, 167, 167, 0.5)');
+
       return false;
     }
   }
@@ -406,6 +503,7 @@ export class Tab5Page implements OnInit {
         this.cnpjEmpresa = this.selectEmpresa[0].cnpj;
         this.emailEmpresa  = this.selectEmpresa[0].email;
         this.contatoEmpresa  = this.selectEmpresa[0].contato;
+        this.imageEmpresa  = this.selectEmpresa[0].img_empresa;
         this.emailUsuarioCriador = this.selectEmpresa[0].criador;
         this.codEmpresa = this.selectEmpresa[0].cod_unico;
         if( this.emailUsuarioCriador == this.emailUsuario ){
@@ -425,6 +523,7 @@ export class Tab5Page implements OnInit {
             dt_nascimento: this.dataNascimentoUsuario,
             sexo: this.sexoUsuario,
             cod_empresa: this.codEmpresa,
+            img_perfil: this.imagePerfil,
             sts_ativo: true
           });
         } catch (e) {
