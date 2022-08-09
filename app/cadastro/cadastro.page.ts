@@ -10,7 +10,7 @@ import { getAnalytics } from "firebase/analytics";
 import { collection, getDocs } from 'firebase/firestore/lite';
 
 //Firebase Auth
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signInWithRedirect, GoogleAuthProvider, getRedirectResult, sendEmailVerification  } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signInWithRedirect, GoogleAuthProvider, getRedirectResult, sendEmailVerification, signOut  } from "firebase/auth";
 
 //firestore
 import { doc, setDoc, getFirestore } from "firebase/firestore";
@@ -51,14 +51,13 @@ async function getCities(db) {
 export class CadastroPage implements OnInit {
   public validaNomeCadastro:boolean;
   public validaEmailCadastro:boolean;
-  public validaCNPJCadastro:boolean;
   public validaSenhaCadastro:boolean;
   public validaConfirmSenhaCadastro:boolean;
   public nomeCadastro:string;
+  public cpfUsuario:string = null;
   public emailCadastro:string;
   public txEmailCadastroInvalido:string;
-  public CNPJCadastro:string;
-  public senhaCadastro:string;
+  public senhaCadastro:string = null;
   public confirmarSenhaCadastro:string;
 
   constructor() { 
@@ -102,7 +101,7 @@ export class CadastroPage implements OnInit {
 
   createUser(){
 
-    if( (this.validaNomeCadastro) && (this.validaEmailCadastro) && (this.validaCNPJCadastro) && (this.validaSenhaCadastro) && (this.validaConfirmSenhaCadastro) ){
+    if( (this.validaNomeCadastro) && (this.validaEmailCadastro) && (this.validaSenhaCadastro) && (this.validaConfirmSenhaCadastro) ){
       const auth = getAuth();
       createUserWithEmailAndPassword(auth, this.emailCadastro, this.senhaCadastro)
       .then(async (userCredential) => {
@@ -111,14 +110,17 @@ export class CadastroPage implements OnInit {
         const user = userCredential.user;
         try {
           const docRef = await setDoc(doc(db, "usuarios", this.emailCadastro), {
-            nome: this.nomeCadastro,
-            email: this.emailCadastro,
             celular: null,
-            cpf: null,
-            dt_nascimento: null,
-            cnpj: this.CNPJCadastro,
-            sts_pessoa_fisica: 1,
+            tipoLogin: "Padrao",
+            urlFotoPerfil: null,
+            emailVerificado: false,
             cod_empresa: null,
+            cpf: this.cpfUsuario,
+            dt_nascimento: null,
+            email: this.emailCadastro,
+            nome: this.nomeCadastro,
+            sexo: null,
+            sts_ativo: 1,
             perfil: 2
           });
           console.log("Document written with ID: ", docRef);
@@ -126,7 +128,11 @@ export class CadastroPage implements OnInit {
           console.error("Error adding document: ", e);
         }
         sendEmailVerification(auth.currentUser).then(() => {
-          window.location.href = "/cadastro-realizado";
+          signOut(auth).then(async () => {
+            window.location.href = "/cadastro-realizado";
+          }).catch((error) => {
+            alert("Falha ao deslogar!")
+          });
         })
       })
       .catch((error) => {
@@ -148,65 +154,29 @@ export class CadastroPage implements OnInit {
   }
 
   perdaFocoNomeCad(){
-    this.closeKeyboardCel();
     const regex = /^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$/;
     const txCardNomeCadastroInvalido = document.getElementById("txCardNomeCadastroInvalido");
     const tbCardNomeCadastro = document.getElementById("tbCardNomeCadastro");
 
     if( this.nomeCadastro == null || !regex.test(this.nomeCadastro) ){
-      txCardNomeCadastroInvalido.style.setProperty('visibility', 'visible');
-      txCardNomeCadastroInvalido.style.setProperty('opacity', '100%');
       tbCardNomeCadastro.style.setProperty('border-color', 'red');    
       this.validaNomeCadastro = false;
     }else{
-      txCardNomeCadastroInvalido.style.setProperty('visibility', 'hidden');
-      txCardNomeCadastroInvalido.style.setProperty('opacity', '0%');
-      tbCardNomeCadastro.style.setProperty('border-color', 'transparent');    
+      tbCardNomeCadastro.style.setProperty('border-color', 'rgba(167, 167, 167, 0.5)');    
       this.validaNomeCadastro = true;
     }
   }
 
   perdaFocoEmailCad(){
-    this.closeKeyboardCel();
     const txCardEmailCadastroInvalido = document.getElementById("txCardEmailCadastroInvalido");
     const tbCardEmailCadastro = document.getElementById("tbCardEmailCadastro");
 
     if( this.emailCadastro == null || !this.emailCadastro.includes('@') || !this.emailCadastro.includes('.') ){
-      txCardEmailCadastroInvalido.style.setProperty('visibility', 'visible');
-      txCardEmailCadastroInvalido.style.setProperty('opacity', '100%');
       tbCardEmailCadastro.style.setProperty('border-color', 'red');   
       this.validaEmailCadastro = false;
     }else{
-      txCardEmailCadastroInvalido.style.setProperty('visibility', 'hidden');
-      txCardEmailCadastroInvalido.style.setProperty('opacity', '0%');
-      tbCardEmailCadastro.style.setProperty('border-color', 'transparent');    
+      tbCardEmailCadastro.style.setProperty('border-color', 'rgba(167, 167, 167, 0.5)');    
       this.validaEmailCadastro = true;
-    }
-  }
-
-  perdaFocoCNPJCad(){
-    this.closeKeyboardCel();
-    const txCardCNPJCadastroInvalido = document.getElementById("txCardCNPJCadastroInvalido");
-    const tbCardCNPJCadastro = document.getElementById("tbCardCNPJCadastro");
-
-    if(this.CNPJCadastro.length !== 15){
-      txCardCNPJCadastroInvalido.style.setProperty('visibility', 'visible');
-      txCardCNPJCadastroInvalido.style.setProperty('opacity', '100%');
-      tbCardCNPJCadastro.style.setProperty('border-color', 'red');   
-      this.validaCNPJCadastro = false; 
-    }else{
-      txCardCNPJCadastroInvalido.style.setProperty('visibility', 'hidden');
-      txCardCNPJCadastroInvalido.style.setProperty('opacity', '0%');
-      tbCardCNPJCadastro.style.setProperty('border-color', 'transparent');    
-      this.validaCNPJCadastro = true;
-    }
-  }
-
-  keyPressCNPJ(){
-    if(this.CNPJCadastro.length == 3){
-      this.CNPJCadastro += '.';
-    }else if(this.CNPJCadastro.length == 7){
-      this.CNPJCadastro += '/0001-';
     }
   }
 
@@ -245,69 +215,57 @@ export class CadastroPage implements OnInit {
       this.validaSenhaCadastro = false;
     }
 
-    if( this.senhaCadastro.length >= 8 ){
-      validacaoDigitos.style.setProperty('color', 'green');    
-      this.validaSenhaCadastro = true;
-    }else{
-      validacaoDigitos.style.setProperty('color', 'red');    
-      this.validaSenhaCadastro = false;
-    }
+    if( this.senhaCadastro !== null ){
+      if( this.senhaCadastro.length >= 8 ){
+        validacaoDigitos.style.setProperty('color', 'green');    
+        this.validaSenhaCadastro = true;
+      }else{
+        validacaoDigitos.style.setProperty('color', 'red');    
+        this.validaSenhaCadastro = false;
+      }
 
-    if( this.senhaCadastro.length == 0 ){
-      validacaoDigitos.style.setProperty('color', "#afafaf");    
-      validacaoLetrasNumeros.style.setProperty('color', '#afafaf');    
-      validacaoLetrasM.style.setProperty('color', '#afafaf');    
-      validacaoCaracEspeciais.style.setProperty('color', '#afafaf');   
-      this.validaSenhaCadastro = false; 
+      if( this.senhaCadastro.length == 0 ){
+        validacaoDigitos.style.setProperty('color', "#afafaf");    
+        validacaoLetrasNumeros.style.setProperty('color', '#afafaf');    
+        validacaoLetrasM.style.setProperty('color', '#afafaf');    
+        validacaoCaracEspeciais.style.setProperty('color', '#afafaf');   
+        this.validaSenhaCadastro = false; 
+      }
     }
 
   }
 
   perdaFocoSenhaCad(){
-    this.closeKeyboardCel();
     const validacaoDigitos = document.getElementById("txValidacaoDigitos");
     const validacaoLetrasNumeros = document.getElementById("txValidacaoLetrasNumeros");
     const validacaoLetrasM = document.getElementById("txValidacaoLetrasM");
     const validacaoCaracEspeciais = document.getElementById("txValidacaoCaracEspeciais");
 
-    if( this.senhaCadastro.length == 0 ){
-      validacaoDigitos.style.setProperty('color', "#afafaf");    
-      validacaoLetrasNumeros.style.setProperty('color', '#afafaf');    
-      validacaoLetrasM.style.setProperty('color', '#afafaf');    
-      validacaoCaracEspeciais.style.setProperty('color', '#afafaf');    
+    if( this.senhaCadastro !== null){
+      if( this.senhaCadastro.length == 0 ){
+        validacaoDigitos.style.setProperty('color', "#afafaf");    
+        validacaoLetrasNumeros.style.setProperty('color', '#afafaf');    
+        validacaoLetrasM.style.setProperty('color', '#afafaf');    
+        validacaoCaracEspeciais.style.setProperty('color', '#afafaf');    
+      }
     }
   }
 
   perdaFocoConfirSenhaCad(){
-    this.closeKeyboardCel();
-    const txCardConfirmarSenhaCadastroInvalida = document.getElementById("txCardConfirmarSenhaCadastroInvalida");
     const tbCardConfirmarSenhaCadastro = document.getElementById("tbCardConfirmarSenhaCadastro");
 
     if(this.senhaCadastro !== this.confirmarSenhaCadastro){
-      txCardConfirmarSenhaCadastroInvalida.style.setProperty('visibility', 'visible');
-      txCardConfirmarSenhaCadastroInvalida.style.setProperty('opacity', '100%');
       tbCardConfirmarSenhaCadastro.style.setProperty('border-color', 'red');    
       this.validaConfirmSenhaCadastro = false;
     }else{
-      txCardConfirmarSenhaCadastroInvalida.style.setProperty('visibility', 'hidden');
-      txCardConfirmarSenhaCadastroInvalida.style.setProperty('opacity', '0%');
-      tbCardConfirmarSenhaCadastro.style.setProperty('border-color', 'transparent');   
+      tbCardConfirmarSenhaCadastro.style.setProperty('border-color', 'rgba(167, 167, 167, 0.5)');   
       this.validaConfirmSenhaCadastro = true; 
     }
   }
 
 
   
-  openKeyboardCel(){
-    const cardCadastro = document.getElementById("cardCadastro");
-    cardCadastro.style.setProperty('height', '180%');
-  }
 
-  closeKeyboardCel(){
-    const cardCadastro = document.getElementById("cardCadastro");
-    cardCadastro.style.setProperty('height', '100%');
-    cardCadastro.style.setProperty('top', '0%');
-  }
 
   cancelarCadastro(){
     window.location.href = "/login";

@@ -12,7 +12,11 @@ const routes: Routes = [
   },
   {
     path: '',
-    loadChildren: () => import('./initial/initial.module').then( m => m.InitialPageModule)
+    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
+  },
+  {
+    path: 'slide-initial',
+    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
   },
   {
     path: 'cadastro',
@@ -25,10 +29,19 @@ const routes: Routes = [
   {
     path: 'cadastro-realizado',
     loadChildren: () => import('./cadastro-realizado/cadastro-realizado.module').then( m => m.CadastroRealizadoPageModule)
-  },  {
+  },
+  {
     path: 'produtos',
     loadChildren: () => import('./produtos/produtos.module').then( m => m.ProdutosPageModule)
+  },  {
+    path: 'edit-produtos',
+    loadChildren: () => import('./edit-produtos/edit-produtos.module').then( m => m.EditProdutosPageModule)
+  },
+  {
+    path: 'edit-image',
+    loadChildren: () => import('./edit-image/edit-image.module').then( m => m.EditImagePageModule)
   }
+
 
 
 ];

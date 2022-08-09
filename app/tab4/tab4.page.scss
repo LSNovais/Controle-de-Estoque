@@ -1,0 +1,41 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300&display=swap');
+
+ion-toolbar{
+    background-color: #cdf2d6;
+}
+
+h4{
+    margin-left: 5%;
+    margin-top: 5%;
+}
+
+h1{
+    margin-left: 13%;
+    font-size: 270%;
+    margin-top: 18%;
+}
+.cardLucros{
+    margin-top: 5%;
+}
+
+ion-card{
+    min-height: 150%;
+    background-color: #0a8967;
+    --color: white;
+    border-radius: 5px;
+}
+
+ion-card-header{
+    font-size: 80%;
+}
+
+.cardDados{
+    margin-top: 30%;
+    width: 40%;
+}
+
+
+.txPorcentagemSituacao{
+    margin-top: -25%;
+    margin-left: 60%;
+}

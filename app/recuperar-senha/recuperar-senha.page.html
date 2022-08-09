@@ -1,9 +1,35 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>recuperarSenha</ion-title>
+    <ion-title>Recuperar Senha</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+  <ion-grid>
+    <ion-row>
+      <ion-col offset="2">
+        <img src="../../assets/imageRecuperarSenha.png">
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-text><p>Encaminhamos um e-mail para sua caixa de entrada com um link para redefirnir sua senha.</p></ion-text>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-input placeholder="E-mail cadastrado" [(ngModel)]="emailRecuperarSenha"></ion-input>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-button expand="full" (click)="btRecuperarSenha()">Enviar e-mail</ion-button>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col offset="4.8">
+        <ion-button size="small" fill="none" (click)="btVoltar()" class="btVoltar">Voltar</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

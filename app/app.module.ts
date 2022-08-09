@@ -22,6 +22,8 @@ import { IonicStorageModule } from '@ionic/storage-angular';
 
 import { Storage } from '@ionic/storage';
 import { ImagePicker } from '@awesome-cordova-plugins/image-picker';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 const firebaseConfig = {
   apiKey: "AIzaSyBdP5R92n_M3OdyukinRkd9Wwomx5_gHNc",
@@ -49,7 +51,12 @@ async function getCities(db) {
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), IonicStorageModule.forRoot(), AppRoutingModule],
+  imports: [BrowserModule, IonicModule.forRoot(), IonicStorageModule.forRoot(), AppRoutingModule, ServiceWorkerModule.register('ngsw-worker.js', {
+  enabled: environment.production,
+  // Register the ServiceWorker as soon as the application is stable
+  // or after 30 seconds (whichever comes first).
+  registrationStrategy: 'registerWhenStable:30000'
+})],
   providers: [ BarcodeScanner],
   bootstrap: [AppComponent]
 })

@@ -1,7 +1,4 @@
 import { Component, AfterViewInit, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { NavController, NavParams } from '@ionic/angular';
-import { TabsPage } from '../tabs/tabs.page';
-import { IonSlides} from '@ionic/angular';
 import { ModalController} from '@ionic/angular';  
 
 //Graficos
@@ -16,7 +13,7 @@ import { collection, getDocs } from 'firebase/firestore/lite';
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signInWithRedirect, GoogleAuthProvider, getRedirectResult, signOut  } from "firebase/auth";
 
 //firestore
-import { doc, setDoc, getFirestore, query, where } from "firebase/firestore";
+import { doc, setDoc, getFirestore, query, where, onSnapshot  } from "firebase/firestore";
 
 const auth = getAuth();
 
@@ -45,6 +42,11 @@ const db = getFirestore(app);
 //Declaração da classe
 export class Tab1Page implements AfterViewInit{
   @ViewChild('lineCanvas') private lineCanvas: ElementRef;
+  @ViewChild('vendasMes') private vendasMes: ElementRef;
+  @ViewChild('vendasSemana') private vendasSemana: ElementRef;
+  @ViewChild('vendasDia') private vendasDia: ElementRef;
+  @ViewChild('barrasVendasMes') private barrasVendasMes: ElementRef;
+
   public nomeUsuario:string;
   public emailUsuario:string;
   public cpfUsuario:string;
@@ -59,6 +61,7 @@ export class Tab1Page implements AfterViewInit{
   public selectReports = [];
   public selectDuvidas = [];
   public selectPerfil = [];
+  public produtosVendidosMes = [];
 
   public i = 0;
   public x = 0;
@@ -80,6 +83,12 @@ export class Tab1Page implements AfterViewInit{
 
 
   async consultaPerfil(){
+    this.barChartMethod();
+    this.graficoMes();
+    this.graficoSemana();
+    this.graficoDia();
+    this.lineChartMethod();
+
     const q = query(collection(db, "usuarios"), where("email", "==", this.emailUsuario));
 
     const querySnapshot = await getDocs(q);
@@ -99,15 +108,21 @@ export class Tab1Page implements AfterViewInit{
 
     //Empresa
     if( this.codEmpresa !== null ){
-      const qu = query(collection(db, "produtos"), where("cod_unico", "==", this.codEmpresa));
-  
-      const querySnapshotQu = await getDocs(qu);
-      querySnapshotQu.forEach((doc) => {
-        // doc.data() is never undefined for query doc snapshots
-        if(doc.data()[this.produtosCadastrados] !== null){
-          this.produtosCadastrados++;
-        }
+      let produtos = [];
+      this.produtosCadastrados = 0;
+
+      const q = query(collection(db, "produtos"), where("cod_unico", "==", this.codEmpresa));
+      const unsubscribe = onSnapshot(q, (querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          this.produtosCadastrados += (doc.data().quantidade_produto);
+
+        });        
+        this.lineChart.data.datasets[1].data = [0, 0, 0, 0, 0, 0, this.produtosCadastrados, 0, 0, 0, 0, 0];
+        this.lineChart.update();
+        produtos = [];
+    
       });
+
     }else{
       const qu = query(collection(db, "produtos"), where("cod_unico", "==", this.emailUsuario));
   
@@ -119,7 +134,6 @@ export class Tab1Page implements AfterViewInit{
         }
       });
     }
-    this.lineChartMethod();
   }
 
   lineChartMethod() {
@@ -169,10 +183,97 @@ export class Tab1Page implements AfterViewInit{
             pointHoverBorderWidth: 2,
             pointRadius: 1,
             pointHitRadius: 10,
-            data: [0, 0, 0, 0, 0, 0, this.produtosCadastrados, 0, 0, 0, 0, 0],
+            data: this.produtosVendidosMes,
             spanGaps: false,
           }
         ]
+      }
+    });
+  }
+
+
+  barChartMethod() {
+    const labels = ['Semana 1', 'Semana 2', 'Semana 3', 'Semana 4'];
+
+    const myChart = new Chart(this.barrasVendasMes.nativeElement, {
+      type: 'bar',
+      data: {
+        labels: labels,
+        datasets: [{
+          data: [65, 59, 80, 81],
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(255, 159, 64, 0.2)',
+            'rgba(255, 205, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)'
+          ],
+          borderColor: [
+            'rgb(255, 99, 132)',
+            'rgb(255, 159, 64)',
+            'rgb(255, 205, 86)',
+            'rgb(75, 192, 192)'
+          ],
+          borderWidth: 1
+        }]
+      },
+      options: {
+          scales: {
+              y: {
+                  beginAtZero: true
+              }
+          }
+      }
+    });
+  }
+
+  graficoMes() {
+
+    const myChart = new Chart(this.vendasMes.nativeElement, {
+      type: 'doughnut',
+      data: {
+        datasets: [{
+          data: [300, 50],
+          backgroundColor: [
+            'rgb(255, 99, 132)',
+            'rgb(54, 162, 235)'
+          ],
+          hoverOffset: 4
+        }]
+      }
+    });
+  }
+
+  graficoSemana() {
+
+    const myChart = new Chart(this.vendasSemana.nativeElement, {
+      type: 'doughnut',
+      data: {
+        datasets: [{
+          data: [300, 50],
+          backgroundColor: [
+            'rgb(255, 99, 132)',
+            'rgb(54, 162, 235)'
+          ],
+          hoverOffset: 4
+        }]
+      }
+    });
+  }
+
+
+  graficoDia() {
+
+    const myChart = new Chart(this.vendasDia.nativeElement, {
+      type: 'doughnut',
+      data: {
+        datasets: [{
+          data: [300, 50],
+          backgroundColor: [
+            'rgb(255, 99, 132)',
+            'rgb(54, 162, 235)'
+          ],
+          hoverOffset: 4
+        }]
       }
     });
   }

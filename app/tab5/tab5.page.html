@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-title>Configurações</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -12,15 +12,18 @@
     </ion-list-header>
     <ion-item lines="none" id="open-modal-perfil">
       <ion-label>Perfil</ion-label>
-      <ion-icon name="person" slot="end"></ion-icon>
+      <ion-icon name="person" slot="start"></ion-icon>
+      <ion-icon name="chevron-forward-outline" slot="end"></ion-icon> 
     </ion-item>
     <ion-item lines="none" id="open-modal-enterprise">
       <ion-label>Empresa</ion-label>
-      <ion-icon name="people" slot="end"></ion-icon>
+      <ion-icon name="people" slot="start"></ion-icon>
+      <ion-icon name="chevron-forward-outline" slot="end"></ion-icon> 
     </ion-item>
     <ion-item lines="none" id="open-modal-data">
       <ion-label>Dados</ion-label>
-      <ion-icon name="stats-chart" slot="end"></ion-icon>
+      <ion-icon name="stats-chart" slot="start"></ion-icon>
+      <ion-icon name="chevron-forward-outline" slot="end"></ion-icon> 
     </ion-item>
     <br>
     <ion-list-header>
@@ -28,19 +31,23 @@
     </ion-list-header>
     <ion-item lines="none" id="open-modal-help">
       <ion-label>Ajuda</ion-label>
-      <ion-icon name="help" slot="end"></ion-icon>
+      <ion-icon name="help" slot="start"></ion-icon>
+      <ion-icon name="chevron-forward-outline" slot="end"></ion-icon> 
     </ion-item>
     <ion-item lines="none" id="open-modal-about">
       <ion-label>Sobre</ion-label>
-      <ion-icon name="information" slot="end"></ion-icon>
+      <ion-icon name="information" slot="start"></ion-icon>
+      <ion-icon name="chevron-forward-outline" slot="end"></ion-icon> 
     </ion-item>
     <ion-item lines="none" id="open-modal-report">
       <ion-label>Reportar Problema</ion-label>
-      <ion-icon name="warning" slot="end"></ion-icon>
+      <ion-icon name="warning" slot="start"></ion-icon>
+      <ion-icon name="chevron-forward-outline" slot="end"></ion-icon> 
     </ion-item>
     <ion-item lines="none">
       <ion-label>Modo Escuro</ion-label>
-      <ion-toggle slot="end"></ion-toggle>
+      <ion-toggle slot="start"></ion-toggle>
+      <ion-icon name="chevron-forward-outline" slot="end"></ion-icon> 
     </ion-item>
   </ion-list>
 
@@ -53,13 +60,13 @@
     </ion-row>
   </ion-grid>
 
-  <ion-modal #perfil trigger="open-modal-perfil" [presentingElement]="presentingElement">
+  <ion-modal #perfil trigger="open-modal-perfil">
     <ng-template>
       <ion-header>
-        <ion-toolbar>
+        <ion-toolbar color="primary">
           <ion-title>Perfil</ion-title>
           <ion-buttons slot="end">
-            <ion-button color="danger" (click)="perfil.dismiss()">Fechar</ion-button>
+            <ion-button style="--color:white" (click)="perfil.dismiss()">Fechar</ion-button>
           </ion-buttons>
         </ion-toolbar>
       </ion-header>
@@ -68,9 +75,13 @@
           <ion-row>
             <ion-col size="30" offset="3">
               <br>
-              <ion-avatar>
-                <img src="../../assets/fotoPerfil.jpg" (click)="pegarImagem()">
-              </ion-avatar>
+              <label for='selecao-arquivo'>
+                <ion-avatar class="imagePerfil" for="arquivo">
+                  <img [src]="imagePerfil" />
+                  <ion-badge><ion-icon name="camera-outline" class="iconCamera"></ion-icon></ion-badge>
+                </ion-avatar>
+              </label>
+              <input id='selecao-arquivo' type='file' (change)="fileChangeEvent($event)">
             </ion-col>
           </ion-row>
           <ion-row>
@@ -83,7 +94,7 @@
           <ion-item>
             <ion-label>
               <p><ion-text color="primary">E-mail</ion-text></p>
-              <ion-input [(ngModel)]="emailUsuario"></ion-input>
+              <ion-input [(ngModel)]="emailUsuario" readonly></ion-input>
             </ion-label>
           </ion-item>
           <ion-item>
@@ -122,13 +133,13 @@
     </ng-template>
   </ion-modal>
 
-  <ion-modal #enterprise trigger="open-modal-enterprise" [presentingElement]="presentingElement">
+  <ion-modal #enterprise trigger="open-modal-enterprise">
     <ng-template>
       <ion-header>
-        <ion-toolbar>
+        <ion-toolbar color="primary">
           <ion-title>Empresa</ion-title>
           <ion-buttons slot="end">
-            <ion-button color="danger" (click)="enterprise.dismiss()">Fechar</ion-button>
+            <ion-button style="--color:white" (click)="enterprise.dismiss()">Fechar</ion-button>
           </ion-buttons>
         </ion-toolbar>
       </ion-header>
@@ -141,11 +152,16 @@
         </ion-list>
         <ion-grid id="gridEmpresa" class="gridEmpresa">
           <ion-row>
-            <ion-col size="30" offset="3">
+            <ion-col size="30" offset="2.6">
               <br>
-              <ion-avatar>
-                <img src="../../assets/fotoEmpresa.jpeg" (click)="pegarImagem()">
-              </ion-avatar>
+              <br>
+              <label for='selecao-arquivo-empresa'>
+                <ion-avatar id="imageEmpresa" class="imageEmpresa" for="arquivo-empresa">
+                  <img [src]="imageEmpresa" />
+                  <ion-badge id="badgeCameraEmpresa" class="badgeCameraEmpresa"><ion-icon name="camera-outline" class="iconCameraEmpresa" id="iconCameraEmpresa"></ion-icon></ion-badge>
+                </ion-avatar>
+              </label>
+              <input id='selecao-arquivo-empresa' type='file' (change)="fileChangeEventEmpresa($event)" [disabled]="editarDados()">
             </ion-col>
           </ion-row>
         </ion-grid>
@@ -198,13 +214,13 @@
     </ng-template>
   </ion-modal>
 
-  <ion-modal #data trigger="open-modal-data" [presentingElement]="presentingElement">
+  <ion-modal #data trigger="open-modal-data">
     <ng-template>
       <ion-header>
-        <ion-toolbar>
+        <ion-toolbar color="primary">
           <ion-title>Dados</ion-title>
           <ion-buttons slot="end">
-            <ion-button color="danger" (click)="data.dismiss()">Fechar</ion-button>
+            <ion-button style="--color:white" (click)="data.dismiss()">Fechar</ion-button>
           </ion-buttons>
         </ion-toolbar>
       </ion-header>
@@ -245,13 +261,13 @@
     </ng-template>
   </ion-modal>
 
-  <ion-modal #help trigger="open-modal-help" [presentingElement]="presentingElement">
+  <ion-modal #help trigger="open-modal-help">
     <ng-template>
       <ion-header>
-        <ion-toolbar>
+        <ion-toolbar color="primary">
           <ion-title>Ajuda</ion-title>
           <ion-buttons slot="end">
-            <ion-button color="danger" (click)="help.dismiss()">cancelar</ion-button>
+            <ion-button style="--color:white" (click)="help.dismiss()">cancelar</ion-button>
           </ion-buttons>
         </ion-toolbar>
       </ion-header>
@@ -298,13 +314,13 @@
     </ng-template>
   </ion-modal>
 
-  <ion-modal #about trigger="open-modal-about" [presentingElement]="presentingElement">
+  <ion-modal #about trigger="open-modal-about">
     <ng-template>
       <ion-header>
-        <ion-toolbar>
+        <ion-toolbar color="primary">
           <ion-title>Sobre</ion-title>
           <ion-buttons slot="end">
-            <ion-button (click)="about.dismiss()">Fechar</ion-button>
+            <ion-button (click)="about.dismiss()" style="--color:white">Fechar</ion-button>
           </ion-buttons>
         </ion-toolbar>
       </ion-header>
@@ -339,13 +355,13 @@
     </ng-template>
   </ion-modal>
 
-  <ion-modal #report trigger="open-modal-report" [presentingElement]="presentingElement">
+  <ion-modal #report trigger="open-modal-report">
     <ng-template>
       <ion-header>
-        <ion-toolbar>
+        <ion-toolbar color="primary">
           <ion-title>Reportar Problema<ion-icon name="warning" slot="end"></ion-icon></ion-title>
           <ion-buttons slot="end">
-            <ion-button color="danger" (click)="report.dismiss()">cancelar</ion-button>
+            <ion-button style="--color:white" (click)="report.dismiss()">cancelar</ion-button>
           </ion-buttons>
         </ion-toolbar>
       </ion-header>

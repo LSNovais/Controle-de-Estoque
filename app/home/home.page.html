@@ -1,9 +1,33 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>home</ion-title>
-  </ion-toolbar>
-</ion-header>
 
-<ion-content>
+<ion-content class="cardSlider" id="cardSlider">
 
+  <ion-card>
+  <ion-slides pager class="slidesInitial" #slideInicial1>
+    <ion-slide class="slide">
+      <ion-card class="cardUm">
+        <ion-card-header>
+          <h1>Olá!</h1>
+          <h4>Seja bem vindo(a) ao <b>Controle de Estoque</b>!</h4>  
+        </ion-card-header>
+        <ion-card-content>
+          <img src="../../assets/firstImage.png" class="imgSlidesInitial"/>
+        </ion-card-content>
+        <h2 ion-button color="secondary" class="btTelaLoginCadastro" (click)="avancarSlider()" clear>Próximo</h2>
+      </ion-card>
+    </ion-slide>
+    <ion-slide class="slide" #slideInicial2>
+      <ion-card class="cardDois">
+        <ion-card-header>
+          <h1 class="txTituloSlideDois">Atenção!</h1>
+          <img class="imgSlideInicialDois" src="../../assets/secondImage.png"/>
+        </ion-card-header>
+        <ion-card-content class="txSlideDois">
+          <p>Nosso aplicativo encontra-se em desenvolvimento, sendo assim, é normal que ocorra alguns bugs, mas estaremos correndo para arruma-los e entregar a melhor versão do aplicativo para você!</p>
+          <p><br><b>Obrigado!</b></p>
+        </ion-card-content>
+        <h2 ion-button color="secondary" class="btTelaLoginCadastro" (click)="continuaTelaLoginCadastro()" clear>Continuar</h2>
+      </ion-card>
+    </ion-slide>
+  </ion-slides>
+  </ion-card>
 </ion-content>

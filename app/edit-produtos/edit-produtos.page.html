@@ -1,0 +1,57 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>{{nomeProduto}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col offset="1">
+        <p><ion-label size="small"  color="primary" id="txCodBarras">Código de Barras</ion-label></p>
+        <ion-input type="number" [(ngModel)]="codBarrasProduto" id="tbCodBarras" placeholder="Código de barras" [readonly]="true"></ion-input>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col offset="1">
+        <p><ion-label size="small"  color="primary" id="txRamo">Cagetoria</ion-label></p>
+        <ion-select class="custom-options-cagetoria" placeholder="Cagetoria do produto">
+          <ion-select-option value="Alimenticio">Alimenticio</ion-select-option>
+          <ion-select-option value="Farmaceutico">Farmaceutico</ion-select-option>
+        </ion-select>      
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col offset="1">
+        <p><ion-label size="small"  color="primary" id="txPeso">Peso</ion-label></p>
+        <ion-input type="number" [(ngModel)]="pesoProduto" class="tbPesoProduto" id="tbPesoProduto" placeholder="Peso do produto" [readonly]="false"></ion-input>
+        <ion-select class="custom-options-peso">
+          <ion-select-option value="Litros">L</ion-select-option>
+          <ion-select-option value="Kg">Kg</ion-select-option>
+        </ion-select>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col offset="1">
+        <p><ion-label size="small"  color="primary" id="txQuantidade">Quantidade</ion-label></p>
+        <ion-input type="number" [(ngModel)]="selectQuantidade" class="tbPrecoProduto" id="tbPrecoProduto" placeholder="Quantidade do produto" [readonly]="false"></ion-input>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col offset="1">
+        <p><ion-label size="small"  color="primary" id="txPreco">Preço (R$)</ion-label></p>
+        <ion-input type="number" [(ngModel)]="precoProduto" class="tbPrecoProduto" id="tbPrecoProduto" placeholder="Preço do produto" [readonly]="false"></ion-input>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col offset="1.5" size="9.5" style="margin-top: 20%;">
+        <ion-button expand="full" (click)="acaoProduto()">{{tipoAcaoBotao}}</ion-button>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col offset="4.5" size="5">
+        <ion-button size="small" fill="none" (click)="cancelarAcaoProduto()" class="btCancelar">Voltar</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

@@ -1,9 +1,131 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>tab4</ion-title>
+  <ion-toolbar style="--background: #28ba62; --color: white;">
+    <ion-title>Carteira</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
 
+  <ion-grid>
+    <ion-row>
+      <ion-col offset="0" size="12" class="cardLucros">
+        <ion-card>
+          <ion-label><h4>Lucros</h4></ion-label>
+          <h1>R$ {{valTotal}}</h1>
+          <p class="txPorcentagemSituacao" id="txPorcentagemSituacao" color="danger"><ion-icon name="trending-down-outline" color="danger"></ion-icon>100% <ion-icon name="remove-outline" color="danger"></ion-icon> R${{valTotal}}</p>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-slides style="margin-top: 10%;" #slideDia>
+          <ion-header style="margin-top: 20%; left: 3%;">
+            <ion-label>Hoje</ion-label>
+          </ion-header>
+          <ion-slide class="slide" style="margin-left: -9%;">
+            <ion-card class="cardDados">
+              <ion-card-header>
+                <b>Lucros</b>
+              </ion-card-header>
+              <ion-card-content>
+                <p>R$ 25,33</p>
+              </ion-card-content>
+            </ion-card>
+            <ion-card class="cardDados">
+              <ion-card-header>
+                <b>Investimentos</b>
+              </ion-card-header>
+              <ion-card-content>
+                <p>R$ 25,33</p>
+              </ion-card-content>
+            </ion-card>
+            <ion-card class="cardDados">
+              <ion-card-header>
+                <b>Lucros</b>
+              </ion-card-header>
+              <ion-card-content>
+                <p>R$ 25,33</p>
+              </ion-card-content>
+            </ion-card>
+          </ion-slide>
+          <ion-slide #slideSemana>
+            <ion-card class="cardDados">
+              <ion-card-header>
+                <b>Lucros</b>
+              </ion-card-header>
+              <ion-card-content>
+                <p>R$ 25,33</p>
+              </ion-card-content>
+            </ion-card>
+            <ion-card class="cardDados">
+              <ion-card-header>
+                <b>Investimentos</b>
+              </ion-card-header>
+              <ion-card-content>
+                <p>R$ 25,33</p>
+              </ion-card-content>
+            </ion-card>
+            <ion-card class="cardDados">
+              <ion-card-header>
+                <b>Lucros</b>
+              </ion-card-header>
+              <ion-card-content>
+                <p>R$ 25,33</p>
+              </ion-card-content>
+            </ion-card>
+          </ion-slide>
+          <ion-slide #slideMes>
+            <ion-card class="cardDados">
+              <ion-card-header>
+                <b>Lucros</b>
+              </ion-card-header>
+              <ion-card-content>
+                <p>R$ 25,33</p>
+              </ion-card-content>
+            </ion-card>
+            <ion-card class="cardDados">
+              <ion-card-header>
+                <b>Investimentos</b>
+              </ion-card-header>
+              <ion-card-content>
+                <p>R$ 25,33</p>
+              </ion-card-content>
+            </ion-card>
+            <ion-card class="cardDados">
+              <ion-card-header>
+                <b>Lucros</b>
+              </ion-card-header>
+              <ion-card-content>
+                <p>R$ 25,33</p>
+              </ion-card-content>
+            </ion-card>
+          </ion-slide>
+        </ion-slides>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col offset="-0.5">
+        <br>
+
+
+
+        <ion-item lines="none">
+          <p style="font-size: 80%;">Últimos produtos cadastrados</p>
+        </ion-item>
+        <ion-list>
+          <ion-item *ngFor="let produto of produtosCadastrados">
+            <ion-content>
+              <ion-avatar slot="start">
+                <img [src]="produto.img_perfil"/>
+              </ion-avatar>
+              <ion-label>
+                <h2><ion-text color="primary">{{produto.nomeUsuario}}</ion-text></h2>
+                <p>{{produto.descHistorico}}</p>
+              </ion-label>
+            </ion-content>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

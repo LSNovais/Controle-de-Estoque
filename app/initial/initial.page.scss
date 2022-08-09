@@ -1,235 +1,66 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300&display=swap');
 
-.cardSlider{
-    visibility: visible;
-}
-//**alterar
 
-.slidesInitial{
-    position: fixed;
-    width: 106%;
-    height: 104%;
-    top: -3%;
-    left: -2.5%;
-}
-
-.slide{
-    position: relative;
-    width: 100%;
-    height: 100%;
-    background-color: white;
-}
-
-.cardUm{
-    position: relative;
-    width: 100%;
-    height: 100%;
-    border-color: transparent;
-}
-
-h1{
-    position: fixed;
-    top: 10%;
-    left: 40%;
-    font-size: 300%;
-    color: #3880ff;
-}
-
-h4{
-    position: fixed;
-    top: 20%;
-    left: 10%;
-    width: 80%;
-
-}
-
-b{
-    color: #3880ff;
-}
-
-.imgSlidesInitial{
-    position: fixed;
-    top: 35%;
-    left: 0%;
-}
-
-.txTituloSlideDois{
-    left: 31%;
-}
-
-.imgSlideInicialDois{
-    position: fixed;
-    top: 20%;
-    left: 0%;
-}
-
-.txSlideDois{
-    position: fixed;
-    text-align: justify;
-    top: 60%;
-    left: 10%;
-    width: 80%;
-}
-
-.btTelaLoginCadastro{
-    position: fixed;
-    height: 5%;
-    width: 18%;
-    top: 92%;
-    left: 78%;
-    font-size: 110%;
-    color: #3880ff;
-}
-
-
-
-
-
-//**Alterar
 .cardLogin{
-    visibility: hidden;
-    position: fixed;
-    overflow-x: hidden;
-    overflow-y: auto;
-    top: 0%;
-    left: 0%;
-    width: 100%;
-    height: 100%;
-    min-height: 85vh;
-    background-image: url("../../assets/PlanoFundo.jpg");
-    filter: blur(0px);
-    z-index: 1;
-}
-.divImgLogoInicial{
-    position: fixed;
-    top: 5%;
-    left: 0%;
-    width: 100%;
-    border-radius: 50%;
-}
-.subCardLogin{
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    top: 0%;
-    border-style: solid;
-    border-color: #3881ff38;
-    background-color: white;
-    // border-top-left-radius: 50px;
-    z-index: 2;
+  visibility: visible;
 }
 
-.txCardEmail{
-    position: fixed;
-    top: 42%;
-    left: 25%;
-    height: 2%;
-    width: 10%;
-    color: black;
-    background-color: white;
+.gridImgLogin{
+  margin-top: 3.5%;
+}
+
+.imgLogin{
+    margin-top: 5%;
+}
+
+p{
     font-size: 70%;
-    z-index: 10;
 }
-.tbCardEmail{
-    position: fixed;
-    top: 44.7%;
-    left: 23.2%;
-    height: 5.5%;
-    width: 50%;
-    color: black;
+
+ion-input{
+    width: 80%;
+    font-size: 80%;
     border-style: solid;
-    border-color: transparent;
-    --padding-top: 6%;
-    z-index: 9;
-}
-.txCardEmailInvalido{
-    position: fixed;
-    visibility: hidden;
-    top: 49%;
-    left: 25%;
-    height: 5%;
-    width: 50%;
-    color: red;
-    font-size: 60%;
-}
-.txCardSenha{
-    position: fixed;
-    top: 51%;
-    left: 25%;
-    height: 2%;
-    width: 9%;
-    color: black;
-    background-color: white;
-    font-size: 70%;
-    z-index: 10;
-}
-.tbCardSenha{
-    position: fixed;
-    top: 53.7%;
-    left: 23%;
-    height: 5.5%;
-    width: 50%;
-    color: black;
-    border-style: solid;
-    border-color: transparent;
-    --padding-top: 10%;
-    z-index: 9;
-
-}
-.txCardSenhaInvalida{
-    position: fixed;
-    visibility: hidden;
-    top: 58%;
-    left: 25%;
-    height: 5%;
-    width: 50%;
-    color: red;
-    font-size: 60%;
+    border-color: rgba(167, 167, 167, 0.5);
+    border-radius: 5px;
 }
 
-
+.txLogin{
+    margin-top: -5%;
+}
 
 .btEntrar{
-    position: fixed;
-    top: 61%;
-    left: 21%;
-    width: 60%;    
-    z-index: 1;
-    --padding-start: 6%;
+    font-size: 70%;
+    margin-top: 5%;
+    width: 80%;
 }
+
 
 .btCadastrar{
-    position: fixed;
-    top: 69.5%;
-    left: 28%;
-    width: 55%;    
-    z-index: 10;
-    color: #afafaf;
-    font-size: 70%;
-}
-.btRecuperarSenha{
-    position: fixed;
-    top: 72.5%;
-    left: 38%;
-    width: 55%;    
-    z-index: 10;
-    color: #afafaf;
-    font-size: 70%;
+    font-size: 60%;
+    margin-top: -5%;
+    color: rgba(167, 167, 167, 0.5);
 }
 
+.btRecuperarSenha{
+    font-size: 60%;
+    margin-top: -15%;
+    color: rgba(167, 167, 167, 0.5);
+}
+
+
 .divSeparadorLogin{
-    position: fixed;
-    top: 77%;
-    left: 20%;
-    width: 62%;
-    height: 0.2%;
+    margin-top: -3%;
+    width: 80%;
+    height: 2%;
     background-color: #d7d8da;
 }
 
+
 .txOu{
-    position: fixed;
-    top: 73.4%;
-    left: 45%;
+    position: flex;
+    margin-top: -2.5%;
+    margin-left: 35%;
     width: 10%;
     color: black;
     background-color: white;
@@ -240,18 +71,16 @@ b{
 
 
 
-
-
 $white: #fff;
 $google-blue: #4285f4;
 $button-active-blue: #1669F2;
 
 .google-btn {
-    position: fixed;
-  top: 82%;
-  left: 21%;
-  width: 60%;
-  height: 6.1%;
+  position: relative;
+  top: -20%;
+  left: 0%;
+  width: 80%;
+  height: 100%;
   background-color: $google-blue;
   border-radius: 2px;
   box-shadow: 0 3px 4px 0 rgba(0,0,0,.25);
@@ -259,7 +88,7 @@ $button-active-blue: #1669F2;
     position: absolute;
     margin-top: 0%;
     margin-left: 0%;
-    width: 40px;
+    width: 18%;
     height: 100%;
     border-radius: 2px;
     background-color: $white;
@@ -268,14 +97,14 @@ $button-active-blue: #1669F2;
     position: absolute;
     margin-top: 28%;
     margin-left: 25%;
-    width: 18px;
-    height: 18px;
+    width: 50%;
+    height: 50%;
   }
   .btn-text {
     float: right;
-    margin: 6% 15%;
+    margin: 6% 24%;
     color: $white;
-    font-size: 14px;
+    font-size: 70%;
     letter-spacing: 0.2px;
     font-family: "Roboto";
   }
@@ -290,54 +119,45 @@ $button-active-blue: #1669F2;
 
 
 
-
-
-
-
-
-
-
-
-
-.facebook-btn {
-    position: fixed;
-  top: 90%;
-  left: 21%;
-  width: 60%;
-  height: 6.1%;
-  background-color: $google-blue;
-  border-radius: 2px;
-  box-shadow: 0 3px 4px 0 rgba(0,0,0,.25);
-  .facebook-icon-wrapper {
-    position: absolute;
-    margin-top: 0%;
-    margin-left: 0%;
-    width: 40px;
-    height: 40px;
+ .facebook-btn {
+  position: relative;
+  top: -20%;
+  left: 0%;
+  width: 80%;
+  height: 100%;
+   background-color: $google-blue;
+   border-radius: 2px;
+   box-shadow: 0 3px 4px 0 rgba(0,0,0,.25);
+   .facebook-icon-wrapper {
+     position: absolute;
+     margin-top: 0%;
+     margin-left: 0%;
+     width: 18%;
+     height: 100%;
     border-radius: 2px;
-    background-color: $white;
-  }
-  .facebook-icon { 
-    position: absolute;
-    margin-top: 11px;
-    margin-left: 11px;
-    width: 18px;
-    height: 18px;
-  }
-  .btn-text-facebook {
-    float: right;
-    margin: 6% 10%;
-    color: $white;
-    font-size: 14px;
-    letter-spacing: 0.2px;
-    font-family: "Roboto";
-  }
-  &:hover {
-    box-shadow: 0 0 6px $google-blue;
-  }
-  &:active {
-    background: $button-active-blue;
-  }
-}
+     background-color: $white;
+   }
+   .facebook-icon { 
+     position: absolute;
+     margin-top: 28%;
+     margin-left: 25%;
+     width: 50%;
+     height: 50%;
+    }
+   .btn-text-facebook {
+     float: right;
+     margin: 6% 18%;
+     color: $white;
+     font-size: 70%;
+     letter-spacing: 0.2px;
+     font-family: "Roboto";
+   }
+   &:hover {
+     box-shadow: 0 0 6px $google-blue;
+   }
+   &:active {
+     background: $button-active-blue;
+   }
+ }
 
 
